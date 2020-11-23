@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+
+{% if sent %}
+<h1>Email sent successfully</h1>
+<p> {{post.title}} was sent successfully to {{form.cleaned_data.to}}  </p>
+{% else %}
+<h1>Share {{post.title}} by email </h1>
+
+<form method="post">
+    {{form.as_p}}
+    {% csrf_token %}
+    <input type="submit" value="Send email">
+</form>
+{% endif %}
+{% endblock %}
+
+
+<!-- try to improve the ui -->

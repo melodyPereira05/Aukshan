@@ -1,0 +1,171 @@
+
+    <div class="container"> 
+      <!--Slideshow starts here -->
+       {% for product, range, nSlides in allProds %}
+      <h5 class="my-4">Flash Sale On {{product.0.category}} - Recommended Items</h5>
+      <div class="row">
+          <div id="demo{{forloop.counter}}" class="col carousel slide my-3" data-ride="carousel">
+              <ul class="carousel-indicators">
+                  <li data-target="#demo{{forloop.counter}}" data-slide-to="0" class="active"></li>
+                  {% for i in range %}
+                  <li data-target="#demo{{forloop.parentloop.counter}}" data-slide-to="{{i}}"></li>
+                  {% endfor %}
+              </ul>
+              <div class="container carousel-inner no-padding">
+                  <div class="carousel-item active">
+                      {% for i in product %}
+                      <div class="col-xs-3 col-sm-3 col-md-3">
+                          <div class="card align-items-center" style="width: 18rem;">
+                              <img src='/media/{{i.image}}' class="card-img-top" alt="...">
+                              <div class="card-body">
+                                  <h5 class="card-title" id="namepr{{i.id}}">{{i.product_name}}</h5>
+                                  <p class="card-text">{{i.desc|slice:"0:53"}}...</p>
+                                  <h6 class="card-title" >Rs.<span id="pricepr{{i.id}}" >{{i.price}}</span></h6>
+                                  <span id="divpr{{i.id}}" class="divpr">
+                                      <button id="pr{{i.id}}" class="btn btn-primary cart">Add To Cart</button>
+                                  </span>
+                                  <a href="/shop/productview/{{i.id}}"><button id="qv{{i.id}}" class="btn btn-primary cart">QuickView</button></a>
+                              </div>
+                          </div>
+                      </div>
+                      {% if forloop.counter|divisibleby:4 and forloop.counter > 0 and not forloop.last %}
+                  </div>
+                  <div class="carousel-item">
+                      {% endif %}
+                      {% endfor %}
+                  </div> 
+               </div>
+          </div> 
+          <!-- left and right controls for the slide -->
+           <a class="carousel-control-prev" href="#demo{{forloop.counter}}" data-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+          </a>
+          <a class="carousel-control-next" href="#demo{{forloop.counter}}" data-slide="next">
+              <span class="carousel-control-next-icon"></span>
+          </a>
+      </div>
+      {% endfor %}
+    </div>
+    {% endblock %} 
+
+
+
+    {% block js %}
+<script>
+// Find out the cart items from localStorage
+if (localStorage.getItem('cart') == null) {
+  var cart = {};
+} else {
+  cart = JSON.parse(localStorage.getItem('cart'));
+  updateCart(cart);
+}
+// If the add to cart button is clicked, add/increment the item
+//$('.cart').click(function() {
+  $('.divpr').on('click', 'button.cart', function(){
+  var idstr = this.id.toString();
+  if (cart[idstr] != undefined) {
+     var quantity=cart[idstr][0] + 1;
+     cart[idstr] = [quantity, name];
+  } else {
+    quantity=1;
+    name=document.getElementById('name'+idstr).innerHTML;
+    price=document.getElementById('price'+idstr).innerHTML;
+      cart[idstr] = [quantity, name,parseInt(price)];
+  }
+  updateCart(cart);
+});
+//Add Popover to cart
+$('#popcart').popover();
+updatePopover(cart);
+function updatePopover(cart) {
+  console.log('We are inside updatePopover');
+  var popStr = "";
+  popStr = popStr + "<h5> Cart for your items in my shopping cart </h5><div class='mx-2 my-2'>";
+  var i = 1;
+  for (var item in cart) {
+      popStr = popStr + "<b>" + i + "</b>. ";
+      popStr = popStr + document.getElementById('name' + item).innerHTML.slice(0, 19) + "... Qty: " + cart[item][0] + '<br>';
+      i = i + 1;
+  }
+  popStr = popStr + "</div>"   
+  document.getElementById('popcart').setAttribute('data-content', popStr);
+  $('#popcart').popover('show');
+}
+function clearCart() {
+  cart = JSON.parse(localStorage.getItem('cart'));
+  for (var item in cart) {
+      document.getElementById('div' + item).innerHTML = '<button id="' + item + '" class="btn btn-primary cart">Add To Cart</button>'
+  }
+  localStorage.clear();
+  cart = {};
+  updateCart(cart);
+}
+function updateCart(cart) {
+  var sum = 0;
+  for (var item in cart) {
+      sum = sum + cart[item][0];
+      document.getElementById('div' + item).innerHTML = "<button id='minus" + item + "' class='btn btn-primary minus'>-</button> <span id='val" + item + "''>" + cart[item][0] + "</span> <button id='plus" + item + "' class='btn btn-primary plus'> + </button>";
+  }
+  localStorage.setItem('cart', JSON.stringify(cart));
+  document.getElementById('cart').innerHTML = sum;
+  console.log(cart);
+  updatePopover(cart);
+}
+// If plus or minus button is clicked, change the cart as well as the display value
+$('.divpr').on("click", "button.minus", function() {
+  a = this.id.slice(7, );
+  cart['pr' + a][0] = cart['pr' + a][0] - 1;
+  cart['pr' + a][0] = Math.max(0, cart['pr' + a][0]);
+  if (cart['pr' + a][0] == 0){
+    document.getElementById('divpr' + a).innerHTML = '<button id="pr'+a+'" class="btn btn-primary cart">Add to Cart</button>';
+    delete cart['pr'+a];
+}
+else{
+    document.getElementById('valpr' + a).innerHTML = cart['pr' + a][0];
+}
+  updateCart(cart);
+});
+$('.divpr').on("click", "button.plus", function() {
+  a = this.id.slice(6, );
+  cart['pr' + a][0] = cart['pr' + a][0] + 1;
+  document.getElementById('valpr' + a).innerHTML = cart['pr' + a][0];
+  updateCart(cart);
+});
+</script>
+{% endblock %}
+
+
+maps:::
+
+
+
+
+
+
+
+
+<div class="d-none d-sm-block mb-5 pb-4">
+    <div id="map" style="height: 420px;"></div>
+    <script>
+      function initMap() {
+        var uluru = {lat: -25.363, lng: 131.044};
+        var grayStyles = [
+          {
+            featureType: "all",
+            stylers: [
+              { saturation: -90 },
+              { lightness: 50 }
+            ]
+          },
+          {elementType: 'labels.text.fill', stylers: [{color: '#A3A3A3'}]}
+        ];
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -31.197, lng: 150.744},
+          zoom: 9,
+          styles: grayStyles,
+          scrollwheel:  false
+        });
+      }
+      
+    </script>
+  </div>

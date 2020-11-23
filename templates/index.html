@@ -1,0 +1,343 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load static %}
+{% block body %}
+
+
+
+<main class="site-main">
+    
+  <!--================ Hero banner start =================-->
+
+
+  <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+
+        <section class="hero-banner">
+          <div class="container">
+            <div class="row no-gutters align-items-center pt-60px" style="height: 550px;">
+              <div class="col-5 d-none d-sm-block">
+                <div class="hero-banner__img">
+                  <img class="img-fluid"  width="900" height="900" src="{% static 'img/home/slider_car.png' %}" alt="">
+                </div>
+              </div>
+              <div class="col-sm-7 col-lg-6 offset-lg-1 pl-4 pl-md-5 pl-lg-0">
+                <div class="hero-banner__content">
+                  <h4>Shop is fun</h4>
+                  <h1>Audi Q5 Premium</h1>
+                  <p>Capitalize on low hanging fruit to identify a ballpark.</p>
+                  <p>Initial bid : $ 50000 </p>
+                  <p>Current bid: $65500</p>
+                  
+                  <a class="button button-hero" href="#">Bid Now</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+       
+    
+        
+    </div>
+
+
+
+
+
+    {%  if items_banner %}
+    {% for item in items_banner %}
+    <div class="carousel-item">
+    <section class="hero-banner">
+      <div class="container">
+        <div class="row no-gutters align-items-center pt-60px" style="height: 550px;">
+          <div class="col-5 d-none d-sm-block">
+            <div class="hero-banner__img" >
+              <img class="img-fluid"  width="900" height="900" src="{{ item.main_photo.url }}" alt="">
+            </div>
+          </div>
+          <div class="col-sm-7 col-lg-6 offset-lg-1 pl-4 pl-md-5 pl-lg-0">
+            <div class="hero-banner__content">
+              <h4>Shop is fun</h4>
+              <h1>{{ item.product_name }}</h1>
+              <p>{{ item.category }}</p>
+              <p>Initial bid : $ {{ item.base_price|intcomma }} </p>
+              <p>Current bid: $ {{ item.base_price }}</p>
+              
+              <a class="button button-hero" href="{{ item.get_absolute_url }}">Bid Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      </section>
+    </div>
+    
+      {% endfor %}
+      {% endif %}
+
+
+  
+    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+
+
+
+  
+  <!--================ Hero banner start =================-->
+<!-- Alerts -->
+<section style="padding-top: 20px;" >
+{%include '_alerts.html' %}
+</section>   
+  
+
+  
+  <div style=" text-align:center; padding-top:200px;  ">
+    <h1><i class="fas fa-rocket"></i> LATEST AUCTION </h1>
+    <hr>
+  </div>
+  </div>
+  {% if items_live %}
+  {% for item in items_live %}
+  <div class="responsive">
+<div  class="gallery grow" >
+  <a  href="{{ item.get_absolute_url }}">
+    <img class="sliderbeg" src="{{ item.main_photo.url }}" alt="Cinque Terre" width="400" height="400" style="border-radius:1.5%" >
+  </a>
+  <div class="desc" > <i class="fas fa-gavel"></i>  <i class="fas fa-heart"></i> <i class="fas fa-cart-plus"></i> <p>{{ item.product_name }} </p></div>
+</div>
+</div>
+{% endfor %}
+{% else %}
+<h4> No items to preview</h4>
+{% endif %}
+
+
+
+
+
+
+
+
+  <!--================ Hero Carousel end =================-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- ================ trending product section start ================= -->  
+  <section class="section-margin calc-60px">
+      <div class="container">
+        <div class="section-intro pb-60px">
+          <p>Popular Item in the market</p>
+          <h2>Trending <span class="section-intro__style">Product</span></h2>
+        </div>
+        <div class="row">
+         {% for item in items_trending %}
+          
+          <div class="col-md-6 col-lg-4 col-xl-3">
+            <div class="card text-center card-product">
+              <div class="card-product__img">
+                <img  style="width: 250px; height:270px;"  class="card-img" src="{{ item.main_photo.url }}" alt="">
+                <ul class="card-product__imgOverlay">
+                  <li><button><i class="ti-search"></i></button></li>
+                  <li><button><i class="lnr lnr lnr-eye"></i></button></li>
+                  <li><button><i class="ti-heart"></i></button></li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <p>{{ item.category }}</p>
+                <h4 class="card-product__title"><a href="{{ item.get_absolute_url }}">{{ item.product_name }}</a></h4>
+                <p class="card-product__price">$ {{ item.base_price }}</p>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+    <!-- ================ trending product section end ================= -->  
+
+    
+    
+  <!-- ================ offer section start ================= --> 
+  <section class="offer" id="parallax-1" data-anchor-target="#parallax-1" data-300-top="background-position: 20px 30px" data-top-bottom="background-position: 0 20px">
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-5">
+            <div class="offer__content text-center">
+              <h3>Up To 50% Off</h3>
+              <h4>Winter Sale</h4>
+              <p>Him she'd let them sixth saw light</p>
+              <a class="button button--active mt-3 mt-xl-4" href="#">Shop Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- ================ offer section end ================= --> 
+
+    <!-- ================ Best Selling item  carousel ================= --> 
+    <section class="section-margin calc-60px">
+      <div class="container">
+        <div class="section-intro pb-60px">
+          <p>Popular Item in the market</p>
+          <h2>Best <span class="section-intro__style">Sellers</span></h2>
+        </div>
+    
+         
+
+          
+
+         
+
+          <div class="row">
+            {% for item in items %}
+             
+             <div class="col-md-6 col-lg-4 col-xl-3">
+               <div class="card text-center card-product">
+                 <div class="card-product__img">
+                   <img  style="width: 250px; height:270px;"  class="card-img" src="{{ item.main_photo.url }}" alt="">
+                   <ul class="card-product__imgOverlay">
+                     <li><button><i class="ti-search"></i></button></li>
+                     <li><button><i class="lnr lnr lnr-eye"></i></button></li>
+                     <li><button><i class="ti-heart"></i></button></li>
+                   </ul>
+                 </div>
+                 <div class="card-body">
+                   <p>{{ item.category }}</p>
+                   <h4 class="card-product__title"><a href="{{ item.get_absolute_url }}">{{ item.product_name }}</a></h4>
+                   <p class="card-product__price">$ {{ item.base_price }}</p>
+                 </div>
+               </div>
+             </div>
+             {% endfor %}
+           </div>
+
+
+     
+      </div>
+    </section>
+
+     <!-- ================ Best Selling item  carousel end ================= --> 
+
+  <!-- ================ Blog section start ================= -->  
+  <section class="blog">
+      <div class="container">
+        <div class="section-intro pb-60px">
+          <p>Popular Item in the market</p>
+          <h2>Latest <span class="section-intro__style">News</span></h2>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
+            <div class="card card-blog">
+              <div class="card-blog__img">
+                <img class="card-img rounded-0" src="img/blog/blog1.png" alt="">
+              </div>
+              <div class="card-body">
+                <ul class="card-blog__info">
+                  <li><a href="#">By Admin</a></li>
+                  <li><a href="#"><i class="ti-comments-smiley"></i> 2 Comments</a></li>
+                </ul>
+                <h4 class="card-blog__title"><a href="single-blog.html">The Richland Center Shooping News and weekly shooper</a></h4>
+                <p>Let one fifth i bring fly to divided face for bearing divide unto seed. Winged divided light Forth.</p>
+                <a class="card-blog__link" href="#">Read More <i class="ti-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
+            <div class="card card-blog">
+              <div class="card-blog__img">
+                <img class="card-img rounded-0" src="img/blog/blog2.png" alt="">
+              </div>
+              <div class="card-body">
+                <ul class="card-blog__info">
+                  <li><a href="#">By Admin</a></li>
+                  <li><a href="#"><i class="ti-comments-smiley"></i> 2 Comments</a></li>
+                </ul>
+                <h4 class="card-blog__title"><a href="single-blog.html">The Shopping News also offers top-quality printing services</a></h4>
+                <p>Let one fifth i bring fly to divided face for bearing divide unto seed. Winged divided light Forth.</p>
+                <a class="card-blog__link" href="#">Read More <i class="ti-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
+            <div class="card card-blog">
+              <div class="card-blog__img">
+                <img class="card-img rounded-0" src="img/blog/blog3.png" alt="">
+              </div>
+              <div class="card-body">
+                <ul class="card-blog__info">
+                  <li><a href="#">By Admin</a></li>
+                  <li><a href="#"><i class="ti-comments-smiley"></i> 2 Comments</a></li>
+                </ul>
+                <h4 class="card-blog__title"><a href="single-blog.html">Professional design staff and efficient equipment you’ll find we offer</a></h4>
+                <p>Let one fifth i bring fly to divided face for bearing divide unto seed. Winged divided light Forth.</p>
+                <a class="card-blog__link" href="#">Read More <i class="ti-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

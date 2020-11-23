@@ -1,0 +1,240 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block body %}
+<!-- ================ start banner area ================= -->	
+<section  style="background-image: url('/static/img/slider1.png ');background-color: #cccccc; height:700px; background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+position: relative; " id="blog" >
+  <div class="container h-100 ">
+    <div style="text-align: center; padding-top:300px;">
+      <div  >
+					<h1>Shop Category</h1>
+					<nav aria-label="breadcrumb" class="banner-breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'home-page' %}">Home </a></li>
+              <li class="breadcrumb-item active" aria-current="page"> Search Preference</li>
+            </ol>
+          </nav>
+				</div>
+			</div>
+    </div>
+	</section>
+	<!-- ================ end banner area ================= -->
+
+
+	<!-- ================ category section start ================= -->		  
+  <section class="section-margin--small mb-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-3 col-lg-4 col-md-5">
+          <div class="sidebar-categories">
+            <div class="head">Categories</div>
+            <ul class="main-categories">
+              <li class="common-filter">
+                <form action="{% url 'auction:search-page' %}" method=get >
+                  
+                  <ul>
+                    <li {% if not category %} class=" filter-list selected" {% endif %}>       
+                      <input class="pixel-radio" type="radio" id="food" name="category">
+                      <a href="{% url 'auction:search-page' %}">All</a> </li> 
+                      {% for c in categories %}        
+                       <li {% if category.slug == c.slug %}class=" filter-list selected" {% endif %}>           
+                       <input class="pixel-radio" type="radio" id="food" name="category">
+                       <a href=" {{ c.get_absolute_url }} ">{{ c.name }}</a></li>      
+                        {% endfor %}     
+                       </ul>
+                  
+                
+              </li>
+            </ul>
+          </div>
+          <div class="sidebar-filter">
+           
+          
+            
+           
+            
+            <div class="common-filter">
+              <div class="head">Price</div>
+              <div class="price-range-area">
+                <div id="price-range"></div>
+                <div class="value-wrapper d-flex">
+                  <div class="price">Price:</div>
+                  <span>$</span>
+                  <div id="lower-value"></div>
+                  <div class="to">to</div>
+                  <span>$</span>
+                  <div id="upper-value"></div>
+                </div>
+              </div>
+            </div>
+            
+            
+          </div>
+        </div>
+        <div class="col-xl-9 col-lg-8 col-md-7">
+          <!-- Start Filter Bar -->
+        
+          
+          
+          <div class="filter-bar d-flex flex-wrap align-items-center">
+            <div class="sorting">
+              <select>
+                <option value="1">Default sorting</option>
+                <option value="1">Latest</option>
+                <option value="1">Oldest</option>
+                <option value="1">Trending</option>
+              </select>
+            </div>
+           
+            <div>
+              <div class="input-group filter-bar-search">
+                <input  name="search_box" type="text" placeholder="Search_box" style="width: 250px;">
+                <div class="input-group-append">
+                  <button type="submit"><i class="ti-search"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          </form>
+          <!-- End Filter Bar -->
+          <!-- Start Best Seller -->
+          <section class="lattest-product-area pb-40 category-list">
+            <div class="row">
+             {% if filters  %}
+             {% for item in filters %}
+              <div class="col-md-6 col-lg-4">
+                <div class="card text-center card-product">
+                  <div class="card-product__img">
+                    <img class="card-img" src="{{ item.main_photo.url }}" alt="">
+                    <ul class="card-product__imgOverlay">
+                      <li><button><i class="ti-search"></i></button></li>
+                      <li><button><i class="ti-shopping-cart"></i></button></li>
+                      <li><button><i class="ti-heart"></i></button></li>
+                    </ul>
+                  </div>
+                  <div class="card-body">
+                    <p>{{ item.category }}</p>
+                    <h4 class="card-product__title"><a href="#">{{ item.product_name }}</a></h4>
+                    <p class="card-product__price">$ {{ item.base_price |intcomma }}</p>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+              {% else %}
+              {% if search == 'first' %}
+              {% for item in items %}
+              <div class="col-md-6 col-lg-4">
+                <div class="card text-center card-product">
+                  <div class="card-product__img">
+                  <a href="{{ item.get_absolute_url }} "><img class="card-img" src="{{item.main_photo.url}}" alt="" style="width: 300px; height:300px;" ></a>
+                    <ul class="card-product__imgOverlay">
+                      <li><button><i class="ti-search"></i></button></li>
+                      <li><button><i class="ti-shopping-cart"></i></button></li>
+                      <li><button><i class="ti-heart"></i></button></li>
+                    </ul>
+                  </div>
+                  <div class="card-body">
+                    <p>{{ item.category }}</p>
+                    <h4 class="card-product__title"><a href="{{ item.get_absolute_url }}">{{ item.product_name }}</a></h4>
+                    <p class="card-product__price">$ {{ item.base_price | intcomma}}</p>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+              {% else %}
+              <h2>No item found related to the query</h2>
+              {% endif %}
+              {% endif %}
+            </div>
+          </section>
+          <!-- End Best Seller -->
+        </div>
+      </div>
+    </div>
+  </section>
+	<!-- ================ category section end ================= -->		  
+
+	<!-- ================ top product area start ================= -->	
+	<section class="related-product-area">
+		<div class="container">
+			<div class="section-intro pb-60px">
+        <p>Popular Item in the market</p>
+        <h2>Top <span class="section-intro__style">Product</span></h2>
+      </div>
+			<div class="row">
+        {% if lots %}
+        {% for lot in lots %}
+        <div class="col-md-6 col-lg-4">
+          <div class="card text-center card-product">
+            <div class="card-product__img">
+            <a href="{{ item.get_absolute_url }} "><img class="card-img" src="{{lot.main_photo.url}}" alt="" style="width: 300px; height:300px;" ></a>
+              <ul class="card-product__imgOverlay">
+                <li><button><i class="ti-search"></i></button></li>
+                <li><button><i class="ti-shopping-cart"></i></button></li>
+                <li><button><i class="ti-heart"></i></button></li>
+              </ul>
+            </div>
+            <div class="card-body">
+              <p>{{ lot.category }}</p>
+              <h4 class="card-product__title"><a href="{{ item.get_absolute_url }}">{{ lot.product_name }}</a></h4>
+              <p class="card-product__price">$ {{ lot.base_price | intcomma}}</p>
+            </div>
+          </div>
+        </div>
+       {% endfor %}
+       {% else %}
+       <h1>No Item available to showcase</h1>
+       {% endif %}
+        
+        
+        
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          {% if lots.has_other_pages %}
+          <ul class="pagination">
+            {% if lots.has_previous %}
+            <li class="page-item">
+              <a href="?page={{lots.previous_page_number}}" class="page-link">&laquo;</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+              <a class="page-link">&laquo;</a>
+            </li>
+            {% endif %}
+            {% for i in lots.paginator.page_range %}
+            {% if lots.number == i %}
+              <li class="page-item active">
+              <a class="page-link">{{i}}</a>
+              </li>
+            {% else %}
+              <li class="page-item">
+              <a href="?page={{i}}" class="page-link">{{i}}</a>
+              </li>
+            {% endif %}
+            {% endfor %}
+            {% if lots.has_next %}
+            <li class="page-item">
+              <a href="?page={{lots.next_page_number}}" class="page-link">&raquo;</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+              <a class="page-link">&raquo;</a>
+            </li>
+            {% endif %}
+          </ul>
+          {% endif %}
+        </div>
+        </div>
+		</div>
+	</section>
+	<!-- ================ top product area end ================= -->		
+
+
+	  
+
+{% endblock %}

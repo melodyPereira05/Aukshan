@@ -1,0 +1,243 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% block title %}
+Title of About
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'shop/styles.css' %}">
+{% endblock %}
+
+
+{% block body %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Around | Order Tracking
+    </title>
+  
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon and Touch Icons-->
+   
+   
+    <!-- Page loading styles-->
+    <style>
+      .cs-page-loading {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: all .4s .2s ease-in-out;
+        transition: all .4s .2s ease-in-out;
+        background-color: #fff;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 9999;
+      }
+  
+      .pb-1, .py-1 {
+        padding-bottom: .25rem!important;
+        background-color: transparent;
+    }
+
+      
+    </style>
+  </head>
+  <!-- Body-->
+  <body>
+   
+    <div class="container pt-4 mb-2 pb-6">
+      <nav aria-label="breadcrumb">
+        <ol class="py-1 my-2 breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'shop home' %}">Home</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'shop home' %}">Shop</a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">Order tracking</li>
+        </ol>
+      </nav>
+    
+
+    {% for id in orders %}
+        <!-- Details-->
+        <h1 class="mb-3 pb-4">Tracking order: <span class='font-weight-normal'>{{id}}</span>
+        </h1>
+        <div class="row mb-4">
+          <div class="col-sm-4 mb-2">
+            <div class="bg-secondary h-100 p-4 text-center rounded"><span class="font-weight-medium text-heading mr-2">Shipped via:</span>UPS Ground</div>
+          </div>
+          <div class="col-sm-4 mb-2">
+            <div class="bg-secondary h-100 p-4 text-center rounded"><span class="font-weight-medium text-heading mr-2">Status:</span>Processing order</div>
+          </div>
+
+          <div class="col-sm-4 mb-2">
+            <div class="bg-secondary h-100 p-4 text-center rounded"><span class="font-weight-medium text-heading mr-2">Expected date:</span>{{ ts|date:"D d M Y" }}</div>
+          </div>
+        </div>
+        
+        <!-- Progress-->
+        <div class="card border-0 box-shadow">
+          <div class="card-body">
+            <div class="progress mb-3" style="height: 4px;">
+              <div class="progress-bar" role="progressbar" style="width: 36%" aria-valuenow="34" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <div class="row pt-4">
+              <div class="col-lg-3 col-sm-6">
+                <div class="media align-items-center mb-4">
+                  <div class="bg-secondary rounded-circle border text-center" style="width: 60px; height: 60px; line-height: 54px;"><i class="fe-shopping-bag font-size-xl text-muted"></i></div>
+                  <div class="media-body pl-3"><span class="badge badge-success badge-pill mb-1"><i class="fe-check mr-1"></i>Completed</span>
+                    <h6 class="text-muted mb-0">Order placed</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-sm-6">
+                <div class="media align-items-center mb-4">
+                  <div class="rounded-circle border border-primary text-center" style="width: 60px; height: 60px; line-height: 54px;"><i class="fe-settings font-size-xl text-primary"></i></div>
+                  <div class="media-body pl-3"><span class="badge badge-primary badge-pill mb-1">In progress</span>
+                    <h6 class="text-primary mb-0">Processing order</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-sm-6">
+                <div class="media align-items-center mb-4">
+                  <div class="rounded-circle border text-center" style="width: 60px; height: 60px; line-height: 54px;"><i class="fe-star font-size-xl"></i></div>
+                  <div class="media-body pl-3"><span class="d-block text-muted font-size-ms mb-1">Third step</span>
+                    <h6 class="mb-0">Quality check</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-sm-6">
+                <div class="media align-items-center mb-4">
+                  <div class="rounded-circle border text-center" style="width: 60px; height: 60px; line-height: 54px;"><i class="fe-package font-size-xl"></i></div>
+                  <div class="media-body pl-3"><span class="d-block text-muted font-size-ms mb-1">Fourth step</span>
+                    <h6 class="mb-0">Product dispatched</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endfor %}
+
+        <!-- Footer-->
+        <div class="d-sm-flex flex-wrap justify-content-between align-items-center text-center pt-4">
+          <div class="custom-control custom-checkbox mt-2 mr-3">
+            <input class="custom-control-input" type="checkbox" id="notify-me" checked>
+            <label class="custom-control-label" for="notify-me">Notify me when order is delivered</label>
+          </div><a class="btn btn-primary btn-sm mt-2" href="#">View order details</a>
+        </div>
+      </div>
+    </main>
+
+
+
+    <!-- Footer-->
+    <footer class="cs-footer bg-dark pt-5 pt-md-6">
+      <div class="container pt-3 pb-0 pt-md-0 pb-md-3">
+        <div class="row mb-4">
+          <div class="col-md-4">
+            <div class="cs-widget cs-widget-light pb-2 mb-4">
+            </div>
+          </div>
+            <div class="cs-widget cs-widget-light pb-2 mb-4">
+              <h4 class="cs-widget-title">Customer zone</h4>
+              <ul>
+                <li><a class="cs-widget-link" href="#">Your account</a></li>
+                <li><a class="cs-widget-link" href="#">Shipping rates &amp; policies</a></li>
+                <li><a class="cs-widget-link" href="#">Refunds &amp; replacements</a></li>
+                <li><a class="cs-widget-link" href="#">Order tracking</a></li>
+                <li><a class="cs-widget-link" href="#">Delivery info</a></li>
+                <li><a class="cs-widget-link" href="#">Taxes &amp; fees</a></li>
+                <li><a class="cs-widget-link" href="#">News</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="cs-widget cs-widget-light pb-3 mb-4">
+              <h4 class="cs-widget-title">Stay informed</h4>
+              <form class="cs-subscribe-form validate" action="#" method="post" name="mc-embedded-subscribe-form" target="_blank" novalidate>
+                <div class="input-group input-group-overlay flex-nowrap">
+                  <div class="input-group-prepend-overlay"><span class="input-group-text text-muted"><i class="fe-mail"></i></span></div>
+                  <input class="form-control prepended-form-control" type="email" name="EMAIL" placeholder="Your email">
+                  <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit" name="subscribe">Subscribe*</button>
+                  </div>
+                </div>
+                <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                <div style="position: absolute; left: -5000px;" aria-hidden="true">
+                  <input class="cs-subscribe-form-antispam" type="text" name="b_c7103e2c981361a6639545bd5_29ca296126" tabindex="-1">
+                </div><small class="form-text text-light opacity-50 pt-1">*Subscribe to our newsletter to receive early discount offers, updates and new products info.</small>
+                <div class="cs-subscribe-status"></div>
+              </form>
+            </div>
+            <div class="cs-widget cs-widget-light pt-1 mb-4">
+              <div class="d-flex flex-wrap pt-1"><a class="btn-market btn-outline btn-apple mr-3 mb-3" href="#" role="button"><span class="btn-market-subtitle">Download on the</span><span class="btn-market-title">App Store</span></a><a class="btn-market btn-outline btn-google mb-3" href="#" role="button"><span class="btn-market-subtitle">Download on the</span><span class="btn-market-title">Google Play</span></a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-darker pt-2">
+        <div class="container py-sm-3">
+          <div class="row pb-4 mb-2 pt-5 py-md-5">
+            <div class="col-md-3 col-sm-6 mb-4">
+              <div class="media align-items-center"><i class="fe-truck text-primary" style="font-size: 2.125rem;"></i>
+                <div class="media-body pl-3">
+                  <h6 class="font-size-base text-light mb-1">Fast and free delivery</h6>
+                  <p class="mb-0 font-size-xs text-light opacity-50">Free delivery for all orders over $200</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+              <div class="media align-items-center"><i class="fe-refresh-cw text-primary" style="font-size: 2.125rem;"></i>
+                <div class="media-body pl-3">
+                  <h6 class="font-size-base text-light mb-1">Money back guarantee</h6>
+                  <p class="mb-0 font-size-xs text-light opacity-50">We return money within 30 days</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+              <div class="media align-items-center"><i class="fe-life-buoy text-primary" style="font-size: 2.125rem;"></i>
+                <div class="media-body pl-3">
+                  <h6 class="font-size-base text-light mb-1">24/7 customer support</h6>
+                  <p class="mb-0 font-size-xs text-light opacity-50">Friendly 24/7 customer support</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+              <div class="media align-items-center"><i class="fe-credit-card text-primary" style="font-size: 2.125rem;"></i>
+                <div class="media-body pl-3">
+                  <h6 class="font-size-base text-light mb-1">Secure online payment</h6>
+                  <p class="mb-0 font-size-xs text-light opacity-50">We possess SSL / Secure сertificate</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr class="hr-light mb-5">
+          <div class="d-sm-flex align-items-center mb-4 pb-3">
+           
+            <div class="d-flex pt-2 pt-sm-0 ml-auto"><a class="social-btn sb-twitter sb-light mr-2 mb-2" href="#"><i class="fe-twitter"></i></a><a class="social-btn sb-facebook sb-light mr-2 mb-2" href="#"><i class="fe-facebook"></i></a><a class="social-btn sb-instagram sb-light mr-2 mb-2" href="#"><i class="fe-instagram"></i></a><a class="social-btn sb-pinterest sb-light mr-2 mb-2" href="#"><i class="fe-pinterest"></i></a><a class="social-btn sb-youtube sb-light mb-2" href="#"><i class="fe-youtube"></i></a></div>
+          </div>
+          <div class="d-sm-flex justify-content-between align-items-center pb-4 pb-sm-2">
+            <div class="order-sm-2 mb-4 mb-sm-3"><img width="181" src="#" alt="Payment methods"/>
+            </div>
+            <div class="order-sm-1 mb-3">
+              <p class="font-size-ms mb-0"><span class="text-light opacity-50 mr-1">© All rights reserved. Made by</span><a class="nav-link-style nav-link-light" href="#" target="_blank" rel="noopener">Melody Pereira</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+   {% endblock %}
+  
+  
+  
+  
+   
+ 
+
+
+

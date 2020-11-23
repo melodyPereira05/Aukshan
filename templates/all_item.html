@@ -1,0 +1,225 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load static %}
+{% block css %}
+<style>
+
+.product-view{
+  position: absolute;
+  display: none;
+  width: 800px;
+  height: auto;
+  padding: 25px;
+  border: 1px solid whitesmoke;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%,-50%);
+  -moz-transform: translate(-50%,-50%);
+  background-color: #ffffff;
+  z-index: 100;
+
+
+}
+
+.close-btn{
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 5px 10px 0;
+   font-size: 22px;
+   color: #92929292;
+   transform: scaleY(0.8);
+
+
+}
+
+.product-big-image{
+  width: 50%;
+  height: auto;
+  display: inline-block;
+  float: left;
+}
+
+
+.card-product-title{
+  width: 48%;
+  height: auto;
+  display: inline-block;
+  padding-right: 12px;
+  float: right;
+
+}
+
+.product-view-p{
+  padding-left: 60px;
+  padding-bottom: 10px;
+}
+
+
+
+</style>
+{% endblock %}
+{% block body %}
+	
+	<!-- ================ start banner area ================= -->	
+  <section  style="background-image:  url('/static/img/slider2.png');background-color: #cccccc; height:700px; background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative; " id="blog" >
+		<div class="container h-100 ">
+			<div style="text-align: center; padding-top:300px;">
+				<div  >
+					<h1>Browse</h1>
+					<nav aria-label="breadcrumb" class="banner-breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'home-page' %}">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">All Products</li>
+            </ol>
+          </nav>
+				</div>
+      </div>
+      
+
+      
+
+
+    </div>
+	</section>
+    <!-- ================ end banner area ================= -->
+    
+    <section class="section-margin calc-60px">
+        <div class="container">
+
+          
+          <div class="section-intro pb-60px">
+            <p>Popular Item On Auction</p>
+            <h2>Trending <span class="section-intro__style">Product</span></h2>
+          </div>
+          <div class="row">
+            <div id="sidebar">     
+              <h3>Categories</h3>    
+               <ul>       
+                 <li {% if not category %} class="selected" {% endif %}>         
+                   <a href="{% url 'auction:all-item' %}">All</a> </li> 
+                   {% for c in categories %}        
+                    <li {% if category.slug == c.slug %}class="selected"         
+                    {% endif %}>           
+                    <a href="{{ c.get_absolute_url }}">{{ c.name }}</a></li>      
+                     {% endfor %}     
+                    </ul>   
+                  </div>
+         
+
+          </div>
+          <div class="row">
+            {% if products %}
+            {% for item in products %}
+            <div class="col-md-6 col-lg-4 col-xl-3">
+              <div class="card text-center card-product">
+                <div class="card-product__img">
+                  <img  style="width: 250px; height:300px;" class="card-img" src="{{ item.main_photo.url }}" alt="">
+                  <ul class="card-product__imgOverlay">
+                    <li><button><i class="ti-search"></i></button></li>  
+                    <li><button><i class="ti-shopping-cart"></i></button></li>
+                    <li><button><i class="ti-heart"></i></button></li>
+                  </ul>
+
+                    
+
+
+                </div>
+                  <div class="product-view" >
+                    <div class="close-btn" >X</div>
+                    <div class="product-big-image" >
+                    <img class="card-img" src="{{ item.main_photo.url }}" alt="">
+                    </div>
+                    <div class="card-product-title" >
+                    <h3  class="product-view-p"><a href="{{ item.get_absolute_url }}">{{ item.product_name }}</a></h3>
+                    <h5>Category: {{ item.category }}</h5>
+                    <h4 > Price : ${{ item.base_price |intcomma }}</h4>
+                    <h5 class="product-view-p"  > Year dated :{{ item.year_published }}</h5>
+                    <p  class="product-view-p" > {{item.description}} <p>
+                    <button class="button primary-btn" >Bid Now</button>
+                    </div>
+                  </div>
+
+
+
+            
+                <div class="card-body">
+                  <p> {% if item.category %} {{ item.category}} {% else %} Product {% endif %}</p>
+                  <h4 class="card-product__title"><a href="{{ item.get_absolute_url }}">{{ item.product_name }}</a></h4>
+                 
+                 
+                  
+              
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+           {% else %}
+            <h1>No items trending yet,visit home page for more info.</h1>
+            {% endif %}
+          </div>
+
+        
+      <div class="row" style="align: center;" >
+        <div class="col-md-12">
+          {% if products.has_other_pages %}
+          <ul class="pagination">
+            {% if products.has_previous %}
+            <li class="page-item">
+              <a href="?page={{products.previous_page_number}}" class="page-link">&laquo;</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+              <a class="page-link">&laquo;</a>
+            </li>
+            {% endif %}
+            {% for i in products.paginator.page_range %}
+            {% if products.number == i %}
+              <li class="page-item active">
+              <a class="page-link">{{i}}</a>
+              </li>
+            {% else %}
+              <li class="page-item">
+              <a href="?page={{i}}" class="page-link">{{i}}</a>
+              </li>
+            {% endif %}
+            {% endfor %}
+            {% if products.has_next %}
+            <li class="page-item">
+              <a href="?page={{products.next_page_number}}" class="page-link">&raquo;</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+              <a class="page-link">&raquo;</a>
+            </li>
+            {% endif %}
+          </ul>
+          {% endif %}
+        </div>
+        </div>
+        </div>
+      </section>
+{% block script %}
+
+<script src="{% static 'features/jquery/jquery-3.2.1.min.js' %}"></script>
+<script>
+  $(document).ready(function(){
+    $('.ti-search').click(function(){
+     var $productview= $(this).parent().parent().parent().parent().next();
+     $($productview).fadeIn('1000');
+    });
+    $('.close-btn').click(function(){
+     var $closebtn= $(this).parent();
+     $($closebtn).fadeOut('100')
+    });
+
+  });
+</script>
+{% endblock %}
+
+
+    {% endblock %}

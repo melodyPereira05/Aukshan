@@ -1,0 +1,378 @@
+
+{%  load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Aukshan - Home</title>
+	<link rel="icon" href="/static/img/Fevicon.png" type="image/png">
+  <link rel="stylesheet" href="{% static 'features/bootstrap/bootstrap.min.css' %} ">
+  <link rel="stylesheet" href="{% static 'features/fontawesome/css/all.min.css' %}">
+  <link rel="stylesheet" href="{% static 'features/fontawesome/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'features/linericon/style.css' %}">
+	<link rel="stylesheet" href="{% static 'features/themify-icons/themify-icons.css' %}">
+  <link rel="stylesheet" href="{% static 'features/nice-select/nice-select.css' %}">
+  <link rel="stylesheet" href="{% static 'features/owl-carousel/owl.theme.default.min.css' %}">
+  <link rel="stylesheet" href="{% static 'features/owl-carousel/owl.carousel.min.css' %}">
+  <link rel="stylesheet" href="{% static 'features/nouislider/nouislider.min.css' %}">
+  <link rel="stylesheet" href="{%static 'css/stylemelody.css' %}">
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  <link rel="stylesheet" href="css/style.css">
+
+  {% block css %}
+  {% endblock %}
+  
+</head>
+
+<body>
+    <!--================ Start Header Menu Area =================-->
+      <header class="header_area">
+      <div class="main_menu">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <div class="container">
+            <a class="navbar-brand logo_h" href="{% url 'home-page' %}"><span style="padding-left:0px;"  > Aukshan</span></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+              <ul class="nav navbar-nav menu_nav ml-auto mr-auto">
+                <li
+                
+                {% if '/' == request.path %}
+                class="nav-item active"
+                {% else %}
+                class="nav-item"
+                {% endif %}
+                
+                ><a class="nav-link" href="{% url 'home-page' %}"> <i class="fas fa-home"></i> Home</a></li>
+
+                <li 
+
+                {% if 'about' in request.path %}
+                    class="nav-item active"
+                    {% else %}
+                    class="nav-item"
+                    {% endif %}
+                
+                >  <a class="nav-link" href="{% url 'about-page' %}"> <i class="fas fa-address-card"></i> About Us</a></li>
+                
+                              <li
+                              {% if 'all-item' in request.path %}
+                                class="nav-item active"
+                                {% else %}
+                                class="nav-item"
+                                {% endif %}
+                              
+                              ><a class="nav-link" href="{% url 'auction:all-item' %}"> <i class="fas fa-fire-alt"></i> Trending</a></li>
+
+
+                              <li 
+
+                              {% if 'search' in request.path %}
+                                  class="nav-item active"
+                                  {% else %}
+                                  class="nav-item"
+                                  {% endif %}
+                
+                >  <a class="nav-link" href="{% url 'auction:search-page' %}"> <i class="fas fa-search"></i> Search </a></li>
+                              <li 
+                              {% if 'post-list' in request.path %}
+                                class="nav-item active"
+                                {% else %}
+                                class="nav-item"
+                                {% endif %}
+                              
+                              ><a class="nav-link" href="{% url 'blog-app:post-list' %}"> <i class="fas fa-newspaper"></i> Blog</a></li>
+                             
+                               <li
+                               
+                               {% if 'contact-us' in request.path %}
+                                class="nav-item active"
+                                {% else %}
+                                class="nav-item"
+                                {% endif %}
+                               
+                               ><a class="nav-link" href="{% url 'contact-us' %}"> <i class="fas fa-phone-alt"></i> Contact Us</a></li>
+              </ul>
+  
+              <ul class="nav-shop">
+                <!-- <li class="nav-item"><input type="text"> <button ><i class="ti-search"></i></button></li> -->
+                
+              <li class="nav-item"><button><i class="ti-shopping-cart"> <a href="{% url 'dashboard' %}"> </i><span class="nav-shop__circle">values</span></a></button> </li>
+              </ul>
+              <ul class="navbar navbar-expand-lg navbar-light" >
+                {% if user.is_authenticated %}
+
+
+                <li 
+                {% if 'dashboard' in request.path %}
+                class="nav-item active"
+                {% else %}
+                class="nav-item"
+                {% endif %}
+                
+                ><a class="nav-link" href="{% url 'dashboard' %}"> <i class="fas fa-user-check"></i>  {{ user.username }}</a></li>
+
+                <li class="nav-item">
+                
+                
+                
+                <a class="nav-link" href="javascript:{document.getElementById('logout').submit()}"> <i class="fas fa-sign-out-alt" ></i> Logout</a>
+                <form action="{% url 'logout' %}" id="logout" method="post" >
+                  {% csrf_token %}
+                  <input type="hidden">
+                </form>
+              </li>
+               
+                {% else %}
+                <li 
+                {% if 'login' in request.path %}
+                class="nav-item active"
+                {% else %}
+                class="nav-item"
+                {% endif %}
+                
+                ><a class="nav-link" href="{% url 'login' %}"> <i  class="fas fa-sign-in-alt"></i> Login</a></li>
+              
+
+             
+                <li 
+                
+                {% if 'register' in request.path %}
+                class="nav-item active"
+                {% else %}
+                class="nav-item"
+                {% endif %}
+                ><a class="nav-link" href="{% url 'register' %}">  Register</a></li>
+
+                {% endif %}
+               
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+      <!--================ End Header Menu Area =================-->
+
+
+
+{% block body %}
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+        <!-- ================ Blog section end ================= -->  
+
+    <!-- ================ Subscribe section start ================= --> 
+    <section class="subscribe-position">
+        <div class="container">
+          <div class="subscribe text-center">
+            <h3 class="subscribe__title">Get Update From Anywhere</h3>
+            <p>Bearing Void gathering light light his eavening unto dont afraid</p>
+            <div id="mc_embed_signup">
+              <form target="_blank" action="#" method="get" class="subscribe-form form-inline mt-5 pt-1">
+                <div class="form-group ml-sm-auto">
+                  <input class="form-control mb-1" type="email" name="EMAIL" placeholder="Enter your email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your Email Address '" >
+                  <div class="info"></div>
+                </div>
+                <button class="button button-subscribe mr-auto mb-1" type="submit">Subscribe Now</button>
+                <div style="position: absolute; left: -5000px;">
+                  <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="" type="text">
+                </div>
+  
+              </form>
+            </div>
+            
+          </div>
+        </div>
+      </section>
+      <!-- ================ Subscribe section end ================= --> 
+  
+      
+  
+    </main>
+  
+  
+    <!--================ Start footer Area  =================-->	
+      <footer class="footer">
+          <div class="footer-area">
+              <div class="container">
+                  <div class="row section_gap">
+                      <div class="col-lg-3 col-md-6 col-sm-6">
+                          <div class="single-footer-widget tp_widgets">
+                              <h4 class="footer_title large_title">Our Mission</h4>
+                              <p>
+                                  So seed seed green that winged cattle in. Gathering thing made fly you're no 
+                                  divided deep moved us lan Gathering thing us land years living.
+                              </p>
+                              <p>
+                                  So seed seed green that winged cattle in. Gathering thing made fly you're no divided deep moved 
+                              </p>
+                          </div>
+                      </div>
+                      <div class="offset-lg-1 col-lg-2 col-md-6 col-sm-6">
+                          <div class="single-footer-widget tp_widgets">
+                              <h4 class="footer_title">Quick Links</h4>
+                              <ul class="list">
+                                  <li><a href="#">Home</a></li>
+                                  <li><a href="#">Shop</a></li>
+                                  <li><a href="#">Blog</a></li>
+                                  <li><a href="#">Product</a></li>
+                                  <li><a href="#">Brand</a></li>
+                                  <li><a href="#">Contact</a></li>
+                              </ul>
+                          </div>
+                      </div>
+                      <div class="col-lg-2 col-md-6 col-sm-6">
+                          <div class="single-footer-widget instafeed">
+                              <h4 class="footer_title">Gallery</h4>
+                              <ul class="list instafeed d-flex flex-wrap">
+                                  <li><img src="img/gallery/r1.jpg" alt=""></li>
+                                  <li><img src="img/gallery/r2.jpg" alt=""></li>
+                                  <li><img src="img/gallery/r3.jpg" alt=""></li>
+                                  <li><img src="img/gallery/r5.jpg" alt=""></li>
+                                  <li><img src="img/gallery/r7.jpg" alt=""></li>
+                                  <li><img src="img/gallery/r8.jpg" alt=""></li>
+                              </ul>
+                          </div>
+                      </div>
+                      <div class="offset-lg-1 col-lg-3 col-md-6 col-sm-6">
+                          <div class="single-footer-widget tp_widgets">
+                              <h4 class="footer_title">Contact Us</h4>
+                              <div class="ml-40">
+                                  <p class="sm-head">
+                                      <span class="fa fa-location-arrow"></span>
+                                      Head Office
+                                  </p>
+                                  <p>123, Main Street, Your City</p>
+      
+                                  <p class="sm-head">
+                                      <span class="fa fa-phone"></span>
+                                      Phone Number
+                                  </p>
+                                  <p>
+                                      +123 456 7890 <br>
+                                      +123 456 7890
+                                  </p>
+      
+                                  <p class="sm-head">
+                                      <span class="fa fa-envelope"></span>
+                                      Email
+                                  </p>
+                                  <p>
+                                      free@infoexample.com <br>
+                                      www.infoexample.com
+                                  </p>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+  
+          <div class="footer-bottom">
+              <div class="container">
+                  <div class="row d-flex">
+                      <p class="col-lg-12 footer-text text-center">
+                          <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+  
+                  </div>
+              </div>
+          </div>
+      </footer>
+      <!--================ End footer Area  =================-->
+  
+  
+  
+    <script src="{% static 'features/jquery/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'features/bootstrap/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'features/skrollr.min.js' %}"></script>
+    <script src="{% static 'features/owl-carousel/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'features/nice-select/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static 'features/jquery.ajaxchimp.min.js' %}"></script>
+    <script src="{% static 'features/mail-script.js' %}"></script>
+    <script src="{% static 'features/skrollr.min.js' %}"></script>
+    <script src="{% static 'features/jquery.form.js' %} "></script>
+    <script src="{% static 'features/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'features/contact.js' %}"></script>
+    <script src="{%static 'features/nouislider/nouislider.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+  
+    
+
+
+    {% block script %}
+    {% endblock %}
+
+ 
+    
+  
+
+
+    
+
+    <script>
+
+        $(window).stellar({
+            responsive: true,
+            parallaxBackgrounds: true,
+            parallaxElements: true,
+            horizontalScrolling: false,
+            hideDistantElements: false,
+            scrollProperty: 'scroll'
+          });
+        
+    </script>
+
+    
+<script type="text/javascript">
+	let thumbnails = document.getElementsByClassName('thumbnail')
+
+	let activeImages = document.getElementsByClassName('active')
+
+	for (var i=0; i < thumbnails.length; i++){
+
+		thumbnails[i].addEventListener('mouseover', function(){
+			console.log(activeImages)
+			
+			if (activeImages.length > 0){
+				activeImages[0].classList.remove('active')
+			}
+			
+
+			this.classList.add('active')
+			document.getElementById('featured').src = this.src
+		})
+	}
+
+
+	let buttonRight = document.getElementById('slideRight');
+	let buttonLeft = document.getElementById('slideLeft');
+
+	buttonLeft.addEventListener('click', function(){
+		document.getElementById('slider').scrollLeft -= 180
+	})
+
+	buttonRight.addEventListener('click', function(){
+		document.getElementById('slider').scrollLeft += 180
+	})
+
+
+</script>
+  </body>
+  </html>

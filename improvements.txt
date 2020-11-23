@@ -1,0 +1,24 @@
+All futher improvements goes here
+1. search based recommendation  ( personal search based )
+2. Different trypes of recommendation
+while typing getting the result.
+2. Blog application -- by buyer and seller
+3. google maps api
+4.cookies and sessinos
+5. At the end add the subscribe now banner
+6. Web scrapping
+
+7. Try to integrate e commerce with it if possible
+8.Django rest api
+search by category ,filters 
+
+9. count timer
+
+++++++++++++++++++++++++changes+++++++++++++++++++++++++++=
+one item active on banner ? make the hottest deal in models
+trending page is all-items page fyi
+
+##########################################################
+
+
+information app contains blogs and news --- web scrapping

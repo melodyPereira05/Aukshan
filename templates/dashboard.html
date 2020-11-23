@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block body %}
+    
+<!-- ================ start banner area ================= -->	
+<section  style="background-image: url('/static/img/slider1.png ');background-color: #cccccc; height:700px; background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative; " id="blog" >
+		<div class="container h-100 ">
+			<div style="text-align: center; padding-top:300px;">
+				<div  >
+                <h1>Dashboard</h1>
+                <nav aria-label="breadcrumb" class="banner-breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'home-page' %}">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Wishlist</li>
+        </ol>
+      </nav>
+            </div>
+        </div>
+</div>
+
+</section>
+
+    <!-- Alerts -->
+ <section style="padding-top: 20px;" >
+    {%include '_alerts.html' %}
+  </section>   
+
+
+
+
+
+
+
+
+<section class="ftco-section">
+	<div class="container" style="padding-top: 200px;" >
+	  <div class="row justify-content-center">
+		<div class="col-md-12 heading-section text-center ftco-animate mb-5">
+			<table class="table">
+				<thead>
+				  <tr>
+					<th scope="col">ID</th>
+					<th scope="col">Auction Item</th>
+				
+					<th scope="col">View item</th>
+				  </tr>
+				</thead>
+
+				
+					<tbody>
+					
+                    <tr>
+						<th scope="row">id</th>
+						<td>name</td>
+			
+						<td>   <div class="col-md-12 form-group">
+                            <button type="submit" value="submit"  class="button button-tracking"><a href="#" style="color: aliceblue;" >View Item</a></button>
+                        </div>
+                    </td>
+                    </tr>
+                  				
+					</tbody>
+				
+
+			
+			
+				
+           </table>
+		</div>
+	  </div>
+	  </div>
+	</section>
+
+
+
+
+    {% endblock %}
+    
+
+    
+  
+    
+   

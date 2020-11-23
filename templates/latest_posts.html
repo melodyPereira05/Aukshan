@@ -1,0 +1,26 @@
+
+
+
+
+<br>
+<br>
+<br>
+    <aside class="single_sidebar_widget popular_post_widget">
+        <h3 class="widget_title">Latest Posts</h3>
+        {% for post in latest_posts %}
+        <div class="media post_item">
+                <img src="/static/img/blog/popular-post/post1.jpg" alt="post">
+                 <div class="media-body">
+                        <a href="{{ post.get_absolute_url }}">
+                                <h3>{{ post.title }}</h3>
+                        </a>
+                        <p>{{ post.created|date:"D d M Y"  }}</p>
+                </div>
+        </div>
+        {% endfor %}
+        
+       
+        
+        <div class="br"></div>
+</aside>
+
