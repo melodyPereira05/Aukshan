@@ -609,7 +609,7 @@ const chatSocket = new WebSocket(
 var room_name_json={{ room_name_json }};
 var roomName={{ auctionid |escapejs}};
 console.log(room_name_json)
-var  username = {{ username }};
+var  username = {{username}};
 console.log(username);
 
 var chatSocket = new  ReconnectingWebSocket(
@@ -676,7 +676,7 @@ function createMessage(data){
 	var msgListTag = document.createElement('tbody');
 	var td=document.createElement('td'); //to store name
 	var username={{username}};
-	td.textContent=username;
+	td.textContent=author;
 	msgListTag.appendChild(td);
 
 	var td=document.createElement('td');
