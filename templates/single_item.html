@@ -111,6 +111,7 @@
 					<div class="s_product_text">
 					
 						
+						
 						  
 						   
 						<h3>{{ lot.product_name }}</h3>
@@ -146,9 +147,9 @@
 							</div>
 						  </div>
 					    
-						  <div id="chat-log"><div>
-							<input id="chat-message-input" type="text" size="100"><br>
-							<input id="chat-message-submit" type="button" value="Send">
+						 
+							
+						
 							{{ room_name|json_script:"room-name" }}
 
 							
@@ -169,11 +170,11 @@
 			  
 							
 
-			  <input id="chat-message-input" style="width: 100px;"   name="qty" id="sst" size="2" maxlength="12" value="{{lot.base_price}}" title="Bid now:" class="input-text qty">
+			  <input id="chat-message-input" style="width: 100px;"   name="qty"  size="2" maxlength="12" value="{{lot.base_price}}" title="Bid now:" class="input-text qty">
 			  {% if room %}
 
 			  
-			  <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value=  parseInt(result.value)+parseInt(10);return false;" class="increase items-count" type="button"><i class="fas fa-arrow-up" aria-hidden="true"></i></button>
+			  <button onclick="var result = document.getElementById('chat-message-input'); var sst = result.value; if( !isNaN( sst )) result.value= parseInt(result.value)+parseInt(10); return false;" class="increase items-count" type="button"><i class="fas fa-arrow-up" aria-hidden="true"></i></button>
 			  
      
 			  {% else %}
@@ -181,6 +182,8 @@
 			 
 			
 			  {% endif %}
+
+			  <div id="chat-log"><div>
 			 
 			  <!-- <i class="fas fa-gavel"  style="color: beige; padding-left:10px;padding-right:20px;" > </i> -->
 					{% if room  %}		           
@@ -610,6 +613,8 @@ document.querySelector('#chat-message-input').onkeyup = function(e) {
 	}
 };
 
+
+
 document.querySelector('#chat-message-submit').onclick = function(e) {
 	const messageInputDom = document.querySelector('#chat-message-input');
 	const message = messageInputDom.value;
@@ -622,7 +627,7 @@ document.querySelector('#chat-message-submit').onclick = function(e) {
 
 	}));
 	
-	
+	messageInputDom.value = parseInt(message) + 10;
 };
 
 function fetchMessages()
@@ -652,103 +657,54 @@ function createMessage(data){
 
 
 
+var endingtime = "{{ endingtime|date:'M j, Y G:i:s' }}";
+console.log(endingtime);
+var countDownDate = new Date(endingtime).getTime();
+//for 1000ms
+ var x = setInterval(function() {
+ 
+  var now = new Date().getTime();
+  console.log(now);
 
- //////////////////////////////
-/*
-chatSocket.onmessage = function(e) {
-	var data = JSON.parse(e.data);
-	var message = data.message;
-	var dateOptions = {hour: 'numeric', minute: 'numeric', hour12: true};
-	var datetime = new Date(data['datetime']).toLocaleString('en',dateOptions);
-	var isMe = data.user === '{{ request.user }}';
-	var source = isMe ? 'me' : 'other';
-	var name = data.user;
-	var $chat = $('#chat');
-	
-	$chat.append('<div class="message ' + source + '">' +
-	'<strong>' + name + '</strong> ' +
-	'<span class="date">' + datetime + '</span><br>' +
-	message +
-	'</div>');
-	$chat.scrollTop($chat[0].scrollHeight);
-	};
-	chatSocket.onclose = function(e) {
-	console.error('Chat socket closed unexpectedly');
-	};
-	var $input = $('.chat-message-input');
-	var $submit = $('#chat-message-submit');
-	$submit.click(function() {
-	 var message = $input.val();
-	 
-	 if(message) {
-	 // send message in JSON format
-	 chatSocket.send(JSON.stringify({'message': message}));
-	 // return focus
-	 $input.val() =parseInt(message.value)+parseInt(10)	;
-	 $input.focus();
-	 }
-	 
+  var difference = countDownDate - now;
+  console.log(difference)
 
-	});
-	
-    
-	$input.focus();
-	$input.keyup(function(e) {
-	if (e.which === 13) {
-	// submit with enter / return key
-	$submit.click();
-	}
-	});
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(difference / (1000 * 60 * 60 * 24));
+  var hours = Math.floor(
+	(difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+  );
+  var minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
-	var deadline = "{{ deadline|date:'M j, Y G:i:s' }}";
-  console.log(deadline);
-  var countDownDate = new Date(deadline).getTime();
-   // Update the count down every 1 second
-   var x = setInterval(function() {
-    // Get today's date and time
-	var now = new Date().getTime();
-	console.log(distance)
+  
+  var daysSpan = document.querySelector('.days');
+  var hoursSpan = document.querySelector('.hours');
+  var minutesSpan = document.querySelector('.minutes');
+  var secondsSpan = document.querySelector('.seconds');
 
-    // Find the distance between now and the count down date
-	var distance = countDownDate - now;
-	console.log(distance)
+  daysSpan.innerHTML=days;
+  hoursSpan.innerHTML=hours;
+  minutesSpan.innerHTML=minutes;
+  secondsSpan.innerHTML=seconds;
 
-    // Time calculations for days, hours, minutes and seconds
-    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    var hours = Math.floor(
-      (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-    );
-    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-	
-	var daysSpan = document.querySelector('.days');
-	var hoursSpan = document.querySelector('.hours');
-	var minutesSpan = document.querySelector('.minutes');
-	var secondsSpan = document.querySelector('.seconds');
 
-	daysSpan.innerHTML=days;
-	hoursSpan.innerHTML=hours;
-	minutesSpan.innerHTML=minutes;
-	secondsSpan.innerHTML=seconds;
-
-	 
-
-	  if (distance < 0) {
-		clearInterval(x);
-		daysSpan.innerHTML="00";
-	hoursSpan.innerHTML="00";
-	minutesSpan.innerHTML="00";
-	secondsSpan.innerHTML="00";
-		document.getElementById("chat-message-submit").disabled = true;
-		var bidbutton=document.getElementById("chat-message-submit");
-		if( bidbutton.disabled ===true )
-		{
-			document.getElementById("mess").innerHTML ="The Auction has Ended";
-		}
+	if (difference < 0) {
+	  clearInterval(x);
+	  daysSpan.innerHTML="00";
+  hoursSpan.innerHTML="00";
+  minutesSpan.innerHTML="00";
+  secondsSpan.innerHTML="00";
+	  document.getElementById("chat-message-submit").disabled = true;
+	  var bidbutton=document.getElementById("chat-message-submit");
+	  if( bidbutton.disabled === true )
+	  {
+		  document.getElementById("demo").innerHTML = "The Auction has Ended";
 	  }
-   },1000); -->
-*/
+	}
+ },1000); 
+
 </script>
 
 {% endblock %}

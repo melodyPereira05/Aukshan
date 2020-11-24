@@ -45,7 +45,10 @@ def single_item(request,item_id,slug):
                           id=item_id,
                           slug=slug,
                           )
-    auction=Auction.objects.get(id=item_id)
+    auction= get_object_or_404(
+        Auction,id=item_id
+    )
+    
     print(auction)
     ####SEller ka page banao
     
@@ -63,14 +66,13 @@ def single_item(request,item_id,slug):
     
     context={
         'room_name_json':mark_safe(json.dumps(item_id)),
-        'auction':auction,
         'auctionid':auction.id,
         'username':mark_safe(json.dumps(request.user.username)),
         'lot':lot,
         'slugged':slugged,
         'category':category,
         'room':room,
-        'deadline': auction.curr_time,
+        'endingtime': auction.curr_time,
         'total_views':5,
     }
     return render(request,'single_item.html',context)
