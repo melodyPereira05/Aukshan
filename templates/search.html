@@ -1,6 +1,16 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load humanize %}
+{% block css %}
+<style>
+  #badge {
+  
+    position: relative;
+    top: -260px;
+    left: -92px;
+}
+</style>
+{% endblock %}
 {% block body %}
 <!-- ================ start banner area ================= -->	
 <section  style="background-image: url('/static/img/slider1.png ');background-color: #cccccc; height:700px; background-position: center;
@@ -57,15 +67,15 @@ position: relative; " id="blog" >
            
             
             <div class="common-filter">
-              <div class="head">Price</div>
+              <div class="head"></div>
               <div class="price-range-area">
                 <div id="price-range"></div>
                 <div class="value-wrapper d-flex">
-                  <div class="price">Price:</div>
-                  <span>$</span>
+                  <div class="price"></div>
+                  <span></span>
                   <div id="lower-value"></div>
-                  <div class="to">to</div>
-                  <span>$</span>
+                  <div class="to"></div>
+                  <span></span>
                   <div id="upper-value"></div>
                 </div>
               </div>
@@ -109,15 +119,23 @@ position: relative; " id="blog" >
                 <div class="card text-center card-product">
                   <div class="card-product__img">
                     <img class="card-img" src="{{ item.main_photo.url }}" alt="">
+                    {% if item.is_live %}
+              <button  class="btn btn-primary" id="badge" >Live</button>
+              {% else %}
+              <button  class="btn btn-danger" id="badge" >Not Live</button>
+              {% endif %}
                     <ul class="card-product__imgOverlay">
                       <li><button><i class="ti-search"></i></button></li>
                       <li><button><i class="ti-shopping-cart"></i></button></li>
                       <li><button><i class="ti-heart"></i></button></li>
                     </ul>
                   </div>
+
+
+
                   <div class="card-body">
                     <p>{{ item.category }}</p>
-                    <h4 class="card-product__title"><a href="#">{{ item.product_name }}</a></h4>
+                 <h4 class="card-product__title"><a href="{{ item.get_absolute_url }}">{{ item.product_name }}</a></h4>
                     <p class="card-product__price">$ {{ item.base_price |intcomma }}</p>
                   </div>
                 </div>
@@ -130,7 +148,12 @@ position: relative; " id="blog" >
                 <div class="card text-center card-product">
                   <div class="card-product__img">
                   <a href="{{ item.get_absolute_url }} "><img class="card-img" src="{{item.main_photo.url}}" alt="" style="width: 300px; height:300px;" ></a>
-                    <ul class="card-product__imgOverlay">
+                  {% if item.is_live %}
+              <button  class="btn btn-primary" id="badge" >Live</button>
+              {% else %}
+              <button  class="btn btn-danger" id="badge" >Not Live</button>
+              {% endif %} 
+                  <ul class="card-product__imgOverlay">
                       <li><button><i class="ti-search"></i></button></li>
                       <li><button><i class="ti-shopping-cart"></i></button></li>
                       <li><button><i class="ti-heart"></i></button></li>
@@ -170,16 +193,23 @@ position: relative; " id="blog" >
         <div class="col-md-6 col-lg-4">
           <div class="card text-center card-product">
             <div class="card-product__img">
-            <a href="{{ item.get_absolute_url }} "><img class="card-img" src="{{lot.main_photo.url}}" alt="" style="width: 300px; height:300px;" ></a>
-              <ul class="card-product__imgOverlay">
+            <a href="{{ lot.get_absolute_url }}"><img class="card-img" src="{{lot.main_photo.url}}" alt="" style="width: 300px; height:300px;" ></a>
+            {% if lot.is_live %}
+              <button  class="btn btn-primary" id="badge" >Live</button>
+              {% else %}
+              <button  class="btn btn-danger" id="badge" >Not Live</button>
+              {% endif %}  
+            <ul class="card-product__imgOverlay">
                 <li><button><i class="ti-search"></i></button></li>
                 <li><button><i class="ti-shopping-cart"></i></button></li>
                 <li><button><i class="ti-heart"></i></button></li>
               </ul>
             </div>
+
+            
             <div class="card-body">
               <p>{{ lot.category }}</p>
-              <h4 class="card-product__title"><a href="{{ item.get_absolute_url }}">{{ lot.product_name }}</a></h4>
+              <h4 class="card-product__title"><a href="{{ lot.get_absolute_url }}">{{ lot.product_name }}</a></h4>
               <p class="card-product__price">$ {{ lot.base_price | intcomma}}</p>
             </div>
           </div>
@@ -235,6 +265,23 @@ position: relative; " id="blog" >
 	<!-- ================ top product area end ================= -->		
 
 
-	  
+  {% block script %}
+
+  <script src="{% static 'features/jquery/jquery-3.2.1.min.js' %}"></script>
+  <script>
+    $(document).ready(function(){
+      $('.ti-search').click(function(){
+        var $productview= $(this).parent().parent().parent().parent().parent().next();
+      $($productview).fadeIn('1000');
+      });
+      $('.close-btn').click(function(){
+       var $closebtn= $(this).parent();
+       $($closebtn).fadeOut('100')
+      });
+  
+    });
+    
+  </script>
+  {% endblock %}
 
 {% endblock %}

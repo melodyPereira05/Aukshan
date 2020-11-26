@@ -22,3 +22,16 @@ trending page is all-items page fyi
 
 
 information app contains blogs and news --- web scrapping
+
+
+improvements.txt
+
+1. seller page to be made -- done 
+2. timestamp of the bidder -- done
+3. get the highest bidder and send email --(highest bidder got)
+4. home page and other page quick view functionality
+5. search page single result implementation --done
+6. home page category wise distribution    --not needed as of now(fundraising)
+7. wish list which can be done looking at dev to dep project show wishlist on dashboard
+8.about page ui
+9. blog page form,contact page form and comments-rating review form.

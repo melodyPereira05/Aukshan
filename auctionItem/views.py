@@ -82,6 +82,7 @@ def search(request,category_slug=None):
     filter_category=Lot.objects.all()
     
     
+    
     if 'search_box' in request.GET:
         search_box=request.GET['search_box']
         if search_box:
@@ -126,6 +127,15 @@ def search(request,category_slug=None):
     return render(request,'search.html',context)
 
 
+def seller_page(request,seller):
+    
+    seller=Seller.objects.get(id=seller)
+    lots=Lot.objects.all()
+    
+    
+    #print(lot.filter(seller=seller[0]))
+    return render(request,'seller-page.html' ,{ 'lot':lots,'seller':seller } )
+    
 
 # @login_required
 # def chat_room(request, item_id):

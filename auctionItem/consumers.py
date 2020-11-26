@@ -62,7 +62,7 @@ class ChatConsumer(WebsocketConsumer):
             'id':message.author.id,
             'author':message.author.username,
             'price':message.price,
-            'timestamp':str((message.time_stamp +timedelta(hours=5.5)).strftime('%H:%M')),
+            'timecap':str((message.timecap +timedelta(hours=5.5)).strftime('%H:%M')),  #django time differnce is 5.5hrs
         }
         
         

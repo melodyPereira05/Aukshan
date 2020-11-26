@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load static %}
+
+
+{% block css %}
+<style>
+  
+	#badge {
+  
+		position: relative;
+		top: -260px;
+		left: -92px;
+	}
+
+.product-view{
+  position: absolute;
+  display: none;
+  width: 800px;
+  height: auto;
+  padding: 25px;
+  border: 1px solid whitesmoke;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%,-50%);
+  -moz-transform: translate(-50%,-50%);
+  background-color: #ffffff;
+  z-index: 100;
+
+
+}
+
+.close-btn{
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 5px 10px 0;
+   font-size: 22px;
+   color: #92929292;
+   transform: scaleY(0.8);
+
+
+}
+
+.product-big-image{
+  width: 50%;
+  height: auto;
+  display: inline-block;
+  float: left;
+}
+
+
+.card-product-title{
+  width: 48%;
+  height: auto;
+  display: inline-block;
+  padding-right: 12px;
+  float: right;
+
+}
+
+.product-view-p{
+  padding-left: 60px;
+  padding-bottom: 10px;
+}
+
+
+
+</style>
+{% endblock %}
+
+{% block body %}
+        
+        <section class="hero-banner">
+            <div class="container">
+              <div class="row no-gutters align-items-center pt-60px" style="height: 590px;">
+                <div class="col-5 d-none d-sm-block">
+                  <div class="hero-banner__img">
+                    <img class="img-fluid"  width="400"  style="height: 450px;" src="{{ seller.seller_photo.url }}" alt="">
+                  </div>
+                </div>
+                <div class="col-sm-7 col-lg-6 offset-lg-1 pl-4 pl-md-5 pl-lg-0">
+                  <div class="hero-banner__content">
+                    <h2>{{ seller.name }}</h2>
+                    <h5>{{ seller.email }}</h5>
+                    <h5>{{ seller.contact_no }}</h5>
+                    
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+
+        
+   
+
+<section class="section-margin calc-60px">
+    <div class="container">
+
+      <div class="row">
+      
+       {% for lots in lot %}
+       {% if lots.seller == seller %}
+        
+        <div class="col-md-6 col-lg-4 col-xl-3">
+          <div class="card text-center card-product">
+            <div class="card-product__img">
+              <img  style="width: 250px; height:270px;"  class="card-img" src="{{ lots.main_photo.url }}" alt="">
+              {% if item.is_live %}
+              <button  class="btn btn-primary" id="badge" >Live</button>
+              {% else %}
+              <button  class="btn btn-danger" id="badge" >Not Live</button>
+              {% endif %}
+              <ul class="card-product__imgOverlay">
+                <li><button><i class="ti-search"></i></button></li>
+                <li><button><i class="lnr lnr lnr-eye"></i></button></li>
+                <li><button><i class="ti-heart"></i></button></li>
+              </ul>
+            </div>
+
+            <div class="product-view" >
+              <div class="close-btn" >X</div>
+              <div class="product-big-image" >
+              <img class="card-img" src="{{ lots.main_photo.url }}" alt="">
+              </div>
+              <div class="card-product-title" >
+              <h3  class="product-view-p"><a href="{{ lots.get_absolute_url }}">{{ item.product_name }}</a></h3>
+              <h5>Category: {{ lots.category }}</h5>
+              <h4 > Price : ${{ lots.base_price |intcomma }}</h4>
+              <h5 class="product-view-p"  > Year dated :{{ lots.year_published }}</h5>
+              <p  class="product-view-p" > {{lots.description}} <p>
+              <button class="button primary-btn" >Bid Now</button>
+              </div>
+            </div>
+            <div class="card-body">
+              <p>{{ lots.category }}</p>
+              <h4 class="card-product__title"><a href="{{ lots.get_absolute_url }}">{{ lots.product_name }}</a></h4>
+              <p class="card-product__price">$ {{ lots.base_price }}</p>
+            </div>
+          </div>
+        </div>
+        
+        {% endif %}
+     
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% block script %}
+
+  <script src="{% static 'features/jquery/jquery-3.2.1.min.js' %}"></script>
+  <script>
+    $(document).ready(function(){
+      $('.ti-search').click(function(){
+        var $productview= $(this).parent().parent().parent().parent().next();
+      $($productview).fadeIn('1000');
+      });
+      $('.close-btn').click(function(){
+       var $closebtn= $(this).parent();
+       $($closebtn).fadeOut('100')
+      });
+  
+    });
+  </script>
+
+
+
+{% endblock %}
+{% endblock %}

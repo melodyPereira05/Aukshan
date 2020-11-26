@@ -25,6 +25,8 @@ class Seller(models.Model):
     seller_photo=models.ImageField(upload_to='photos/seller/%Y/%m/%d/')
     contact_no =models.CharField(max_length=200)
     email=models.CharField(max_length=200)
+    def get_absolute_url(self):
+        return reverse('auction:seller-page',args=[self.id])
     
     def __str__(self):
         return self.name
@@ -105,8 +107,9 @@ class Auction(models.Model):
 class Message(models.Model):
     auction=models.ForeignKey(Auction, on_delete=models.CASCADE,related_name='auction') 
     author=models.ForeignKey(User,related_name='author_messsages',on_delete=models.CASCADE)
+    timecap = models.DateTimeField(auto_now_add=True)
     price = models.TextField()
-    time_stamp = models.DateTimeField(auto_now_add=True)
+   
     
     
 
