@@ -91,7 +91,30 @@ class Lot(models.Model):
     def __str__(self):
         return self.product_name
     
+  
+class Wishlist(models.Model):
+    lot=models.CharField(max_length=1000)
+    lot_id=models.IntegerField()
+    Wishlisted_date=models.DateTimeField(default=datetime.now,blank=True)
+    user_id=models.IntegerField(blank=False)
     
+    def __srt__(self):
+        return self.name
+
+class Contact(models.Model):
+    lot=models.CharField(max_length=1000)
+    lot_id=models.IntegerField()
+    name=models.CharField(max_length=200)
+    email=models.CharField(max_length=200)
+    message=models.TextField(blank=True)
+    contact_date=models.DateTimeField(default=datetime.now,blank=True)
+    user_id=models.IntegerField(blank=True)
+    
+    def __str__(self):
+        return self.name
+    
+    
+  
 class Auction(models.Model):
     start =  models.DateTimeField(auto_now=False)
     curr_time =  models.DateTimeField(auto_now=False)

@@ -162,7 +162,9 @@
 										<img id="slideRight" class="arrow" src="/static/img/arrow-right.png">
 									</div>
 								</div>
+								 <a href="{% url 'auction:contact' lot.id %}"> <button class="button btn-dark">Make an Enquiry</button></a>
 								</div>
+								
 
 							
 
@@ -174,7 +176,7 @@
 					
 						
 						
-						  
+						
 						   
 						<h3>{{ lot.product_name }}</h3>
 
@@ -666,7 +668,11 @@
 				<div class="product-big-image" >
 				<img class="card-img" src="{{ item.main_photo.url }}" alt="">
 				</div>
+				
 				<div class="card-product-title" >
+				
+				<button class="button primary-btn">Make an Enquiry</button>
+				
 				<h3  class="product-view-p"><a href="{{ item.get_absolute_url }}">{{ item.product_name }}</a></h3>
 				<h5>Category: {{ item.category }}</h5>
 				<h4 > Price : ${{ item.base_price |intcomma }}</h4>

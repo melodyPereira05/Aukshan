@@ -31,17 +31,31 @@
 
       <div class="row" >
         <div class="col-md-8 col-lg-9">
-            <form  class="form-contact contact_form" action="#" method="post" id="contactForm" novalidate="novalidate">
+            <form  class="form-contact contact_form" action="{% url 'auction:contact-submit'%}" method="POST">
+              {% csrf_token %}
+              {% if user.is_authenticated %}
+              <input type="hidden" name="user_id" value="{{ user.id }}" >
+              {% else %}
+              <input type="hidden" name="user_id" value="0">
+              {% endif %}
+              <input type="hidden" name="seller_email" value="{{ lot.seller.email }}" >
+              <input type="hidden" name="lot_id" value="{{ lot.id }}" >
+              <input type="hidden" name="lot_title" value="{{ lot.product_name}}" >
               <div class="row">
                 <div class="col-lg-5">
                   <div class="form-group">
-                    <input class="form-control" name="name" id="name" type="text" placeholder="Enter your name">
+                    <input class="form-control" name="lot_title" id="name" type="text" placeholder="Title" value="{{ lot.product_name }}"  required >
                   </div>
                   <div class="form-group">
-                    <input class="form-control" name="email" id="email" type="email" placeholder="Enter email address">
+                    <input class="form-control" name="name" id="name" type="text" placeholder="Enter your name" {% if user.is_authenticated %} value="{{ user.username }}" {% endif %}
+                      required >
                   </div>
                   <div class="form-group">
-                    <input class="form-control" name="subject" id="subject" type="text" placeholder="Enter Subject">
+                    <input class="form-control" name="email" id="email" type="email" placeholder="Enter email address" {% if user.is_authenticated %} value="{{ user.email }}" {% endif %}
+                    required >
+                  </div>
+                  <div class="form-group">
+                    <input class="form-control" name="phone" id="phone" type="number" placeholder="Enter Phone Number">
                   </div>
                 </div>
                 <div class="col-lg-7">
@@ -51,9 +65,10 @@
                 </div>
               </div>
               <div class="form-group text-center text-md-right mt-3">
-                <button type="submit" class="button button--active button-contactForm">Send Message</button>
+                <input type="submit" value="Send Message" class="btn btn-primary">
+                </form>
               </div>
-            </form>
+            
           </div>
       </div>
 

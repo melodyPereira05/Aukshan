@@ -35,3 +35,4 @@ improvements.txt
 7. wish list which can be done looking at dev to dep project show wishlist on dashboard
 8.about page ui
 9. blog page form,contact page form and comments-rating review form.
+ 

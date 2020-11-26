@@ -1,5 +1,6 @@
-from django.shortcuts import render,get_object_or_404
-from auctionItem.models import Lot,Category,Auction,Seller
+from django.shortcuts import render,get_object_or_404,redirect
+from auctionItem.models import Lot,Category,Auction,Seller,Contact,Wishlist
+from django.contrib import messages
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
@@ -136,6 +137,43 @@ def seller_page(request,seller):
     #print(lot.filter(seller=seller[0]))
     return render(request,'seller-page.html' ,{ 'lot':lots,'seller':seller } )
     
+def contact(request,id):
+    lot=get_object_or_404(Lot,pk=id)
+    context={
+        'lot':lot,
+         #'title': sproperty.title 
+    }
+    return render(request,'contact_us.html',context)
+
+def contact_submit(request):
+    if request.method =='POST':
+        print("Post")
+        lot_id=request.POST['lot_id']
+        lot=request.POST['lot_title']
+        name=request.POST['name']
+        email=request.POST['email']
+        phone=request.POST.get('phone')
+        message=request.POST['message']
+        user_id=request.POST['user_id']
+        #seller_email=request.POST['seller_email']
+        
+        if request.user.is_authenticated:
+            user_id=request.user.id
+            has_contacted=Contact.objects.all().filter(lot_id=lot_id,user_id=user_id)
+            if has_contacted:
+                messages.add_message(request, messages.ERROR,'You have already made an enquiry for this product')
+                return redirect('/auction/contact/'+lot_id)
+        
+        contact=Contact( lot=lot,lot_id=lot_id,name=name,email=email,message=message,user_id=user_id)
+        
+        contact.save()
+        
+        messages.add_message(request, messages.SUCCESS, 'Your query has been submitted,we will get back to you soon')
+        
+        
+        return redirect('dashboard')
+    messages.add_message(request, messages.ERROR, 'There was some issue parsing your request,please try again')
+    return redirect('dashboard')
 
 # @login_required
 # def chat_room(request, item_id):
