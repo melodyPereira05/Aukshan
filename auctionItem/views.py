@@ -10,7 +10,8 @@ import redis
 from django.conf import settings
 from django.utils.safestring import mark_safe
 import json
-# connect to redis
+from django.core.mail import send_mail
+
 
 
 
@@ -149,13 +150,15 @@ def contact_submit(request):
     if request.method =='POST':
         print("Post")
         lot_id=request.POST['lot_id']
-        lot=request.POST['lot_title']
+        slug=request.POST['slug']
+        lot=request.POST.get('lot_title')
         name=request.POST['name']
-        email=request.POST['email']
+        email=request.POST.get('email')
         phone=request.POST.get('phone')
-        message=request.POST['message']
+        message=request.POST.get('message')
         user_id=request.POST['user_id']
         #seller_email=request.POST['seller_email']
+        print(slug)
         
         if request.user.is_authenticated:
             user_id=request.user.id
@@ -164,15 +167,49 @@ def contact_submit(request):
                 messages.add_message(request, messages.ERROR,'You have already made an enquiry for this product')
                 return redirect('/auction/contact/'+lot_id)
         
-        contact=Contact( lot=lot,lot_id=lot_id,name=name,email=email,message=message,user_id=user_id)
+        contact=Contact( lot=lot,lot_id=lot_id,name=name,email=email,slug=slug,message=message,user_id=user_id)
         
         contact.save()
+        #sending email
+        send_mail(
+            lot,
+                message,
+                'melzpereira0509@gmail.com',
+                [email,'melodypereira05@gmail.com'],#'sukhadamorgaonkar28@gmail.com','chetna.nihalani@yahoo.in'],
+        )
+        
+       
         
         messages.add_message(request, messages.SUCCESS, 'Your query has been submitted,we will get back to you soon')
         
         
         return redirect('dashboard')
     messages.add_message(request, messages.ERROR, 'There was some issue parsing your request,please try again')
+    return redirect('dashboard')
+
+
+def wishlist_submit(request):
+    if request.method =='POST':
+        
+        lot_id=request.POST['lot_id']
+        slug=request.POST['slug']
+        lot=request.POST['lot']
+        name=request.POST['name']        
+        user_id=request.POST['user_id']
+        
+        if request.user.is_authenticated:
+            user_id=request.user.id
+            is_wishlisted=Contact.objects.all().filter(lot_id=lot_id,user_id=user_id)
+            if is_wishlisted:
+                messages.add_message(request, messages.ERROR,'You have already wishlisted this product')
+                return redirect('/auction/contact/'+lot_id)
+        
+        wishlist=Wishlist( lot=lot,lot_id=lot_id,name=name,slug=slug,user_id=user_id)
+        
+        wishlist.save()
+       
+        return redirect('dashboard')
+   
     return redirect('dashboard')
 
 # @login_required

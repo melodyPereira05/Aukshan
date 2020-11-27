@@ -23,7 +23,10 @@
     </div>
 	</section>
 	<!-- ================ end banner area ================= -->
-
+    <!-- Alerts -->
+    <section style="padding-top: 20px;" >
+      {%include '_alerts.html' %}
+    </section>  
 	<!-- ================ contact section start ================= -->
   <section class="section-margin--small">
     <div class="container">
@@ -40,6 +43,7 @@
               {% endif %}
               <input type="hidden" name="seller_email" value="{{ lot.seller.email }}" >
               <input type="hidden" name="lot_id" value="{{ lot.id }}" >
+              <input type="hidden" name="slug" value="{{ lot.slug}}">
               <input type="hidden" name="lot_title" value="{{ lot.product_name}}" >
               <div class="row">
                 <div class="col-lg-5">

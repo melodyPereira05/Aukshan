@@ -54,26 +54,35 @@
 				<thead>
 				  <tr>
 					<th scope="col">ID</th>
+					<th scope="col">Enquiry timstamp</th>
 					<th scope="col">Auction Item</th>
 				
 					<th scope="col">View item</th>
 				  </tr>
 				</thead>
 
-				
+				{% if contacts %}
+					{% for contact in contacts %}
 					<tbody>
+
 					
                     <tr>
-						<th scope="row">id</th>
-						<td>name</td>
+						<th scope="row">{{contact.id}}</th>
+						<td>{{contact.contact_date |date:"D d M Y" }}</td>
+						<td>{{contact.lot}}</td>
 			
 						<td>   <div class="col-md-12 form-group">
-                            <button type="submit" value="submit"  class="button button-tracking"><a href="#" style="color: aliceblue;" >View Item</a></button>
+                            <button type="submit" value="submit"  class="button button-tracking"><a href="{{ contact.get_absolute_url }}" style="color: aliceblue;" >View Item</a></button>
                         </div>
                     </td>
                     </tr>
                   				
 					</tbody>
+					{% endfor %}
+
+			{% else %}
+			<h1>You have not made any enquiries</h1>
+					{% endif %}
 				
 
 			

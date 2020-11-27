@@ -262,7 +262,87 @@
 						<h5>Product not live</h5>
 						{% endif %}
 						<div class="card_area d-flex align-items-center">
-							<a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+							<form  class="form-contact contact_form" action="{% url 'auction:wishlist-submit'%}" method="POST">
+								{% csrf_token %}
+								{% if user.is_authenticated %}
+								<input type="hidden" name="user_id" value="{{ user.id }}" >
+								{% else %}
+								<input type="hidden" name="user_id" value="0">
+								{% endif %}
+								
+								<input type="hidden" name="lot_id" value="{{ lot.id }}" >
+								<input type="hidden" name="slug" value="{{ lot.slug}}">
+								<input type="hidden" name="lot" value="{{ lot.product_name}}" >
+								<input type="hidden" name="name" value="{{ lot.name}}" >
+								
+								  <button type="submit" > <i class="lnr lnr lnr-heart"></i> </button>
+								  </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+							
 							<a class="icon_btn" href="#"><i class="lnr lnr lnr-eye"></i></a>
 						</div>
 					</div>

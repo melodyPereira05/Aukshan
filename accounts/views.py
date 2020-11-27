@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib import auth
+from auctionItem.models import Contact,Wishlist
 
 
 # Create your views here.
@@ -62,4 +63,10 @@ def logout(request):
     return redirect('home-page')
 
 def dashboard(request):
-    return render(request,'dashboard.html')
+    contact_dashboard=Contact.objects.order_by('-contact_date').filter(user_id=request.user.id)  
+   
+    context={
+        'contacts':contact_dashboard
+      
+    }
+    return render(request,'dashboard.html',context)

@@ -169,30 +169,7 @@ MESSAGE_TAGS = {
 
 EMAIL_HOST='smtp.gmail.com'
 EMAIL_HOST_USER='melzpereira0509@gmail.com'
-EMAIL_HOST_PASSWORD='###############'
+EMAIL_HOST_PASSWORD='djangomango@123'
 EMAIL_PORT=587
 EMAIL_USE_TLS=True
 
-
-#testing purpose email
-# (env) C:\Users\Melody vilas pereira\Desktop\Django+projects\Aukshan>python manage.py shell
-# Python 3.7.2 (tags/v3.7.2:9a3ffc0492, Dec 23 2018, 22:20:52) [MSC v.1916 32 bit (Intel)] on win32
-# Type "help", "copyright", "credits" or "license" for more information.
-# (InteractiveConsole)
-# >>> from django.core.mail import send_mail
-# >>> send_mail
-# <function send_mail at 0x03920ED0>
-# >>> send_mail('Django mail','This email was send using django for testing purpose only','melzpereira0509@gmail.com',['melzpereira0509@gmail.com'],fail_silently=False)
-# Content-Type: text/plain; charset="utf-8"
-# MIME-Version: 1.0
-# Content-Transfer-Encoding: 7bit
-# Subject: Django mail
-# From: melzpereira0509@gmail.com
-# To: melzpereira0509@gmail.com
-# Date: Thu, 15 Oct 2020 05:46:17 -0000
-# Message-ID: <160274077769.26828.14794922099455928566@melody>
-
-# This email was send using django for testing purpose only
-# -------------------------------------------------------------------------------
-# 1
-# >>>
