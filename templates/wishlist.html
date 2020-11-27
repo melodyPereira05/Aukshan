@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block css %}
+<style>
+#badge {
+  
+    position: relative;
+    top: -260px;
+    left: -92px;
+}
+</style>
+{% endblock %}
+{% block body %}
+    
+<!-- ================ start banner area ================= -->	
+<section  style="background-image: url('/static/img/slider1.png ');background-color: #cccccc; height:700px; background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative; " id="blog" >
+		<div class="container h-100 ">
+			<div style="text-align: center; padding-top:300px;">
+				<div  >
+                <h1>Wishlist</h1>
+                <nav aria-label="breadcrumb" class="banner-breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'home-page' %}">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Wishlist</li>
+        </ol>
+      </nav>
+            </div>
+        </div>
+</div>
+
+</section>
+
+    <!-- Alerts -->
+ <section style="padding-top: 20px;" >
+    {%include '_alerts.html' %}
+  </section>   
+
+
+
+<section class="cart_area">
+    <div class="container">
+        <div class="cart_inner">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        {% if wishlists %}
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Product</th>
+                            <th scope="col">Date</th>
+                          
+                            
+                        </tr>
+                    </thead>
+
+                   
+					{% for wishlist in wishlists %}
+                    <tbody>
+                      
+                            
+                            
+                           
+                        
+                        <tr>
+                            <td>
+                               
+                                    
+                                   
+                                        <h5>{{ wishlist.lot_id }}</h5>
+                                    
+                                
+                            </td>
+                           <td>
+                                <p>{{ wishlist.lot }}</p>
+                           
+                           </td>
+                           
+                            <td>
+                                <h5> {{ wishlist.Wishlisted_date |date:"D d M Y" }}</h5>
+                            </td>
+                        </tr>
+                       
+                        
+                        
+                        
+                      
+                    </tbody>
+
+                    {% endfor %}
+
+			{% else %}
+			<h2>You have not wishlisted any items yet</h2>
+					{% endif %}
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+

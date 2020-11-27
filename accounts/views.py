@@ -70,3 +70,12 @@ def dashboard(request):
       
     }
     return render(request,'dashboard.html',context)
+
+def wishlist(request):
+    contact_wishlist=Wishlist.objects.order_by('-Wishlisted_date').filter(user_id=request.user.id)  
+   
+    context={
+        'wishlists':contact_wishlist
+      
+    }
+    return render(request,'wishlist.html',context)

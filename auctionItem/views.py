@@ -1,5 +1,5 @@
 from django.shortcuts import render,get_object_or_404,redirect
-from auctionItem.models import Lot,Category,Auction,Seller,Contact,Wishlist
+from auctionItem.models import Lot,Category,Auction,Seller,Contact,Wishlist,Subscribe
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404
@@ -154,7 +154,7 @@ def contact_submit(request):
         lot=request.POST.get('lot_title')
         name=request.POST['name']
         email=request.POST.get('email')
-        phone=request.POST.get('phone')
+        #phone=request.POST.get('phone')
         message=request.POST.get('message')
         user_id=request.POST['user_id']
         #seller_email=request.POST['seller_email']
@@ -199,29 +199,40 @@ def wishlist_submit(request):
         
         if request.user.is_authenticated:
             user_id=request.user.id
-            is_wishlisted=Contact.objects.all().filter(lot_id=lot_id,user_id=user_id)
+            is_wishlisted=Wishlist.objects.all().filter(lot_id=lot_id,user_id=user_id)
             if is_wishlisted:
                 messages.add_message(request, messages.ERROR,'You have already wishlisted this product')
-                return redirect('/auction/contact/'+lot_id)
+                return redirect('wishlist')
         
         wishlist=Wishlist( lot=lot,lot_id=lot_id,name=name,slug=slug,user_id=user_id)
         
         wishlist.save()
        
-        return redirect('dashboard')
+        return redirect('wishlist')
    
-    return redirect('dashboard')
+    return redirect('wishlist')
 
-# @login_required
-# def chat_room(request, item_id):
-#     try:
-#         # retrieve course with given id joined by the current user
-#         course = request.user.get(id=item_id)
+
+def subscribe(request):
+    if request.method =="POST":
+        email=request.POST.get('email')
         
-#     except:
-#         # user is not a student of the course or course does not exist
-#         return HttpResponseForbidden()
-#     return render(request, 'single-page.html', {'course': course})
+        if request.user.is_authenticated:
+            
+            has_subscribed=Subscribe.objects.all().filter(email=email)
+            if has_subscribed:
+                messages.add_message(request, messages.ERROR,'You have already subscribed')
+                return redirect('home-page')
+        
+        sub=Subscribe(email=email)
+        
+        sub.save()
+        return redirect('home-page')
+   
+    return redirect('home-page')
+        
+        
+
 
 
 
