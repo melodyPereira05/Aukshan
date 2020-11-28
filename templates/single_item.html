@@ -189,7 +189,7 @@
 							<li><a href="#"><span> Status</span> {% if lot.is_live %} Live {% else %} Not Live {% endif %}</a></li>
 						</ul>
 
-						<h3 id="winner" ></h3>
+						<h3 id="winner"></h3>
 						<p> {{ lot.description }}</p>
 
 						{% if lot.is_live %}
@@ -447,7 +447,7 @@
 								<div class="review_item">
 									<div class="media">
 										<div class="d-flex">
-											<img src="img/product/review-1.png" alt="">
+											<img src="/static/img/product/review-1.png" alt="">
 										</div>
 										<div class="media-body">
 											<h4>Blake Ruiz</h4>
@@ -462,7 +462,7 @@
 								<div class="review_item reply">
 									<div class="media">
 										<div class="d-flex">
-											<img src="img/product/review-2.png" alt="">
+											<img src="/static/img/product/review-2.png" alt="">
 										</div>
 										<div class="media-body">
 											<h4>Blake Ruiz</h4>
@@ -477,7 +477,7 @@
 								<div class="review_item">
 									<div class="media">
 										<div class="d-flex">
-											<img src="img/product/review-3.png" alt="">
+											<img src="/static/img/product/review-3.png" alt="">
 										</div>
 										<div class="media-body">
 											<h4>Blake Ruiz</h4>
@@ -624,7 +624,7 @@
 								<div class="review_item">
 									<div class="media">
 										<div class="d-flex">
-											<img src="img/product/review-1.png" alt="">
+											<img src="/static/img/product/review-1.png" alt="">
 										</div>
 										<div class="media-body">
 											<h4>Blake Ruiz</h4>
@@ -642,7 +642,7 @@
 								<div class="review_item">
 									<div class="media">
 										<div class="d-flex">
-											<img src="img/product/review-2.png" alt="">
+											<img src="/static/img/product/review-2.png" alt="">
 										</div>
 										<div class="media-body">
 											<h4>Blake Ruiz</h4>
@@ -660,7 +660,7 @@
 								<div class="review_item">
 									<div class="media">
 										<div class="d-flex">
-											<img src="img/product/review-3.png" alt="">
+											<img src="/static/img/product/review-3.png" alt="">
 										</div>
 										<div class="media-body">
 											<h4>Blake Ruiz</h4>
@@ -942,7 +942,12 @@ var countDownDate = new Date(endingtime).getTime();
   hoursSpan.innerHTML="00";
   minutesSpan.innerHTML="00";
   secondsSpan.innerHTML="00";
-  document.getElementById('winner').textContent=winner;
+  if(winner){
+  document.getElementById('winner').textContent="The Winner is " +winner;
+  }else{
+	document.getElementById('winner').textContent="No Winner declared";
+
+  }
 
 	  document.getElementById("chat-message-submit").disabled = true;
 	  var bidbutton=document.getElementById("chat-message-submit");

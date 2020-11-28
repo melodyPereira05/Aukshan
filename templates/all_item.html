@@ -125,6 +125,7 @@
                 <div class="card-product__img">
                   <a href="{{item.get_absolute_url}}"></a><img  style="width: 250px; height:300px;" class="card-img" src="{{ item.main_photo.url }}" alt=""></a>
                   {% if item.is_live %}
+                  
                   <button  class="btn btn-primary" id="badge" >Live</button>
                   {% else %}
                   <button  class="btn btn-danger" id="badge" >Not Live</button>

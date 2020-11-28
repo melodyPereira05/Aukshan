@@ -92,13 +92,13 @@
                              
                                <li
                                
-                               {% if 'contact-us' in request.path %}
+                               {% if 'dashboard' in request.path %}
                                 class="nav-item active"
                                 {% else %}
                                 class="nav-item"
                                 {% endif %}
                                
-                               ><a class="nav-link" href="{% url 'auction:contact-submit' %}"> <i class="fas fa-phone-alt"></i> Contact Us</a></li>
+                               ><a class="nav-link" href="{% url 'auction:contact-submit' %}"> <i class="fas fa-phone-alt"></i> Dashboard</a></li>
               </ul>
   
               <ul class="nav-shop">
@@ -244,12 +244,12 @@
                           <div class="single-footer-widget instafeed">
                               <h4 class="footer_title">Gallery</h4>
                               <ul class="list instafeed d-flex flex-wrap">
-                                  <li><img src="img/gallery/r1.jpg" alt=""></li>
-                                  <li><img src="img/gallery/r2.jpg" alt=""></li>
-                                  <li><img src="img/gallery/r3.jpg" alt=""></li>
-                                  <li><img src="img/gallery/r5.jpg" alt=""></li>
-                                  <li><img src="img/gallery/r7.jpg" alt=""></li>
-                                  <li><img src="img/gallery/r8.jpg" alt=""></li>
+                                  <li><img src="/static/img/gallery/r1.jpg" alt=""></li>
+                                  <li><img src="/static/img/gallery/r2.jpg" alt=""></li>
+                                  <li><img src="/static/img/gallery/r3.jpg" alt=""></li>
+                                  <li><img src="/static/img/gallery/r5.jpg" alt=""></li>
+                                  <li><img src="/static/img/gallery/r7.jpg" alt=""></li>
+                                  <li><img src="/static/img/gallery/r8.jpg" alt=""></li>
                               </ul>
                           </div>
                       </div>
