@@ -55,34 +55,7 @@ class Lot(models.Model):
     
     
     
-    @property
-    def auction_status(self):
-        today = timezone.now()
-        auction = self.auction
-        if auction.curr_time < today:
-            return "past"
-        elif auction.start > today:
-            return "upcoming"
-        else:
-            return "live" 
     
-    def time_to_end(self):
-        today = timezone.now()
-        auction = self.auction
-        if auction.curr_time < today:
-            return 0
-        else:
-            return auction.curr_time - today
-
-    
-    def time_to_start(self):
-        today = timezone.now()
-        auction = self.auction
-        if auction.curr_time < today:
-            return 0
-        else:
-            return today - auction.start
-
     class Meta:
         ordering=('product_name',)
         index_together=(('id','slug'),)

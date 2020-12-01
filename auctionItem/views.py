@@ -102,16 +102,7 @@ def search(request,category_slug=None):
         category=get_object_or_404(Category,slug=category_slug)   
         filter_category = filter_category.filter(category=category)
     filter_category = list(filter_category)
-    live_items = []
-    upcoming_items = []
-    for item in  filter_category:
-        if item.auction_status == "live":
-            live_items.append(item)
-        elif item.auction_status == "upcoming":
-            upcoming_items.append(item)
-    live_items.sort(key=Lot.time_to_end, reverse=True)
-    upcoming_items.sort(key=Lot.time_to_start, reverse=True)
-    filter_category = live_items + upcoming_items    
+    
      
     lots=Lot.objects.order_by('-year_published')
     paginator = Paginator(lots, 6) # Show 25 contacts per page.
