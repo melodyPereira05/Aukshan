@@ -181,7 +181,7 @@
 						<h3>{{ lot.product_name }}</h3>
 
 
-						<h3> Year dated :{{ lot.year_dated }}</h3>
+						<h3> Year dated : <span style="color: #6495ed;" >{{ lot.year_published | date:"D,d,M,Y"}} </span> </h3>
 						<h2> Base Price : $ {{ lot.base_price }}</h2>
 						
 						<ul class="list">
@@ -189,7 +189,8 @@
 							<li><a href="#"><span> Status</span> {% if lot.is_live %} Live {% else %} Not Live {% endif %}</a></li>
 						</ul>
 
-						<h3 id="winner"></h3>
+					
+						<h1  id="winner" class="display-4" style="color:blueviolet" ></h1>
 						<p> {{ lot.description }}</p>
 
 						{% if lot.is_live %}
@@ -259,7 +260,7 @@
 			  {% endif %}
 						</div>
 						{% else %}
-						<h5>Product not live</h5>
+						<h1 class="display-4" style="color:#384aeb" >Product is not Live </h1>
 						{% endif %}
 						<div class="card_area d-flex align-items-center">
 
@@ -413,10 +414,10 @@
 								</tr>
 								<tr>
 									<td>
-										<h5>Year Dated</h5>
+										<h5>Year Dated:</h5>
 									</td>
 									<td>
-										<h5>{{ lot.year_published }}</h5>
+										<h5>{{ lot.year_published | date:"D,d,M,Y" }}</h5>
 									</td>
 								</tr>
 								<tr>
@@ -756,7 +757,7 @@
 				<h3  class="product-view-p"><a href="{{ item.get_absolute_url }}">{{ item.product_name }}</a></h3>
 				<h5>Category: {{ item.category }}</h5>
 				<h4 > Price : ${{ item.base_price |intcomma }}</h4>
-				<h5 class="product-view-p"  > Year dated :{{ item.year_published }}</h5>
+				<h5 class="product-view-p"  > Year dated :{{ item.year_published|date:"D,d,M,Y"}}</h5>
 				<p  class="product-view-p" > {{item.description}} <p>
 				<button class="button primary-btn" >Bid Now</button>
 				</div>

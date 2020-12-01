@@ -184,7 +184,7 @@ def contact_submit(request):
         
         
         return redirect('dashboard')
-    messages.add_message(request, messages.ERROR, 'There was some issue parsing your request,please try again')
+        
     return redirect('dashboard')
 
 

@@ -109,7 +109,7 @@
           <div class="card text-center card-product">
             <div class="card-product__img">
               <img  style="width: 250px; height:270px;"  class="card-img" src="{{ lots.main_photo.url }}" alt="">
-              {% if item.is_live %}
+              {% if lots.is_live %}
               <button  class="btn btn-primary" id="badge" >Live</button>
               {% else %}
               <button  class="btn btn-danger" id="badge" >Not Live</button>
